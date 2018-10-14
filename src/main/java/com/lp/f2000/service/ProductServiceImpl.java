@@ -21,9 +21,9 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public void insert(Product product) {
+	public int insert(Product product) {
 		// TODO Auto-generated method stub
-		productMapper.insert(product);
+		return productMapper.insert(product);
 		
 	}
 

@@ -1,6 +1,7 @@
 package com.lp.f2000.mapper;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
@@ -16,29 +17,31 @@ public interface ProductMapper {
 	@Select("SELECT * FROM product WHERE id=#{id} AND is_valid=#{isValid}")
 	public Product getProductById(@Param("id") int id, @Param("isValid") int isValid);
 	
-	@Insert("INSERT INTO product(name, original_price, current_price, post_url) "
-			+ "VALUES(#{name}, #{originalPrice}, #{currentPrice}, #{postUrl})")
+	@Insert("INSERT INTO product(name, desc1, desc2, desc3) "
+			+ "VALUES(#{name}, #{desc1}, #{desc2}, #{desc3})")
 	@Options(useGeneratedKeys = true, keyProperty = "id")
-	public void insert(Product product);
+	public int insert(Product product);
 	
 	@Select("SELECT * FROM product WHERE is_valid=1 ")
 	public List<Product> listProducts();
 	
-	@Update("UPDATE product SET name=#{name}, original_price=#{originalPrice}, current_price=#{currentPrice}, post_url=#{postUrl}, update_time=#{updateTime} WHERE id=#{id}")
+	@Update("UPDATE product SET name=#{name}, desc1=#{desc1}, desc2=#{desc2}, desc3=#{desc3}, update_time=#{updateTime} WHERE id=#{id}")
 	public void updateProduct(Product product);
 	
 	@Update("UPDATE product SET is_valid = 0  WHERE id=#{id} ")
 	public void deleteProduct(int id);
 	
-	
-	@Insert("INSERT INTO category(name, parent_id) "
-			+ "VALUES(#{name}, #{parentId})")
+	@Insert("INSERT INTO categorize(resource_id, resource_type, category_id) "
+			+ "VALUES(#{rid}, #{rtype}, #{cid})")
 	@Options(useGeneratedKeys = true, keyProperty = "id")
-	public void insertCategory(Category cat);
+	public void insertProductCat(int rid, int rtype, int cid);	
 	
-	@Select("SELECT * FROM category WHERE id=#{id} AND is_valid=1")
-	public Product getCategoryById(@Param("id") int id);
+	@Select("SELECT cat.* "
+			+ "FROM category AS cat, categorize as catize  "
+			+ "WHERE cat.id = catize.category_id AND catize.resource_id = #{rid} AND catize.resource_type = #{rtype} ")
+	public List<Category> listProductCats(int rid, int rtype);
 	
-	@Select("SELECT * FROM product WHERE is_valid=1 ")
-	public List<Product> listProductsByPid(int pid);
+	@Delete("DELETE FROM categorize WHERE resource_id=#{pid} and resource_type = #{rtype} and category_id = #{cid} ")
+	public void deleteProductCat(int rid, int rtype, int cid);
+	
 }

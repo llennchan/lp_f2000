@@ -2,15 +2,14 @@ package com.lp.f2000.entity;
 
 import java.sql.Timestamp;
 
-public class Category {
+public class Image {
 	private int id;
-	private String name;
-	private int parentId;
-	private int catType;
+	private String postUrl;
+	private int resourceId;
+	private int resourceType;
 	private boolean isValid;
 	private Timestamp createTime;
 	private Timestamp updateTime;
-	
 	
 	public int getId() {
 		return id;
@@ -18,17 +17,23 @@ public class Category {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getName() {
-		return name;
+	public String getPostUrl() {
+		return postUrl;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setPostUrl(String postUrl) {
+		this.postUrl = postUrl;
 	}
-	public int getParentId() {
-		return parentId;
+	public int getResourceId() {
+		return resourceId;
 	}
-	public void setParentId(int parentId) {
-		this.parentId = parentId;
+	public void setResourceId(int resourceId) {
+		this.resourceId = resourceId;
+	}
+	public int getResourceType() {
+		return resourceType;
+	}
+	public void setResourceType(int resourceType) {
+		this.resourceType = resourceType;
 	}
 	public boolean isValid() {
 		return isValid;
@@ -48,11 +53,7 @@ public class Category {
 	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
 	}
-	public int getCatType() {
-		return catType;
-	}
-	public void setCatType(int catType) {
-		this.catType = catType;
-	}
-
+	
+	
+	
 }

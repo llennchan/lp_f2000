@@ -13,12 +13,12 @@ import com.lp.f2000.entity.Product;
 
 public interface CategoryMapper {
 	
-	@Insert("INSERT INTO category(name, parent_id) "
-			+ "VALUES(#{name}, #{parentId})")
+	@Insert("INSERT INTO category(name, parent_id, cat_type) "
+			+ "VALUES(#{name}, #{parentId}, #{catType})")
 	@Options(useGeneratedKeys = true, keyProperty = "id")
 	public void insertCategory(Category cat);
 	
-	@Update("UPDATE category SET name=#{name}, parent_id=#{parentId} WHERE id=#{id}")
+	@Update("UPDATE category SET name=#{name}, parent_id=#{parentId} , cat_type=#{catType} WHERE id=#{id}")
 	public void updateCategory(Category cat);
 	
 	@Select("SELECT * FROM category WHERE parent_id = #{pid} and is_valid=1 ")

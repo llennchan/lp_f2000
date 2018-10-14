@@ -3,16 +3,28 @@ DROP TABLE IF EXISTS `product`;
 create table `product`
 (
     `id` INT(11) NOT NULL auto_increment,
-	`name` VARCHAR(255) COMMENT '商品名称',
-	`original_price` DECIMAL(18,2) COMMENT '原价格',
-	`current_price` DECIMAL(18,2) COMMENT '现在价格',
-	`post_url` VARCHAR(255) COMMENT '配图',
+	`desc1` VARCHAR(255) COMMENT '描述1',
+	`desc2` VARCHAR(255) COMMENT '描述2',
+	`desc3` VARCHAR(255) COMMENT '描述3',
 	`is_valid` TINYINT(1) DEFAULT 1 COMMENT '是否有效',
 	`create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
 	`update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
 	primary key(`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='商品表';
 
+-- 图片表
+DROP TABLE IF EXISTS `image`;
+create table `image`
+(
+    `id` INT(11) NOT NULL auto_increment,
+	`post_url` VARCHAR(255) COMMENT '地址',
+	`resource_id` INT(11) DEFAULT 0 COMMENT '资源id',
+	`resource_type` TINYINT(4) DEFAULT 0 COMMENT '资源类型',
+	`is_valid` TINYINT(1) DEFAULT 1 COMMENT '是否有效',
+	`create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+	`update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+	primary key(`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='商品表';
 
 --  商品分类表 category
 DROP TABLE IF EXISTS `category`;
@@ -20,6 +32,7 @@ create table category
 (
     id INT(11) NOT NULL auto_increment,
 	name VARCHAR(255) COMMENT '分类名称',
+	cat_type TINYINT(4) DEFAULT 0 COMMENT '分类类型',
 	parent_id INT(11) NOT NULL DEFAULT 0,
 	is_valid TINYINT(1) DEFAULT 1 COMMENT '是否有效',
 	create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -27,12 +40,13 @@ create table category
 	primary key(id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='商品分类表';
 
---  商品分类关联表 categorize
+--  分类关联表 categorize
 DROP TABLE IF EXISTS `categorize`;
 create table categorize
 (
     id INT(11) NOT NULL auto_increment,
-	product_id INT(11) NOT NULL DEFAULT 0 COMMENT '商品ID',
+	resource_id INT(11) DEFAULT 0 COMMENT '资源id',
+	resource_type TINYINT(4) DEFAULT 0 COMMENT '资源类型',
 	category_id INT(11) NOT NULL DEFAULT 0 COMMENT '分类ID',
 	is_valid TINYINT(1) DEFAULT 1 COMMENT '是否有效',
 	create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',

@@ -4,7 +4,8 @@ import java.sql.Timestamp;
 
 public class Categorize {
 	private int id;
-	private int productId;
+	private int resourceId;
+	private int resourceType;
 	private int categoryId;
 	private boolean isValid;
 	private Timestamp createTime;
@@ -15,11 +16,18 @@ public class Categorize {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getProductId() {
-		return productId;
+
+	public int getResourceId() {
+		return resourceId;
 	}
-	public void setProductId(int productId) {
-		this.productId = productId;
+	public void setResourceId(int resourceId) {
+		this.resourceId = resourceId;
+	}
+	public int getResourceType() {
+		return resourceType;
+	}
+	public void setResourceType(int resourceType) {
+		this.resourceType = resourceType;
 	}
 	public int getCategoryId() {
 		return categoryId;

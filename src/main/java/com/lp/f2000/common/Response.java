@@ -69,6 +69,10 @@ public class Response<T> extends AbstractResponse {
 		return new Response<Object>(status, msg);
 	}
 
+	public static Response<Object> ofParamError(String msg) {
+		return new Response<Object>(ReturnCode.PARAM_ERROR, msg);
+	}
+	
 	public static <T> Response<T> ofError(int status, String msg, Class<T> cls) {
 		return new Response<T>(status, msg);
 	}
