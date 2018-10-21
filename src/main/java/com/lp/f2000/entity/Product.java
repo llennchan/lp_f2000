@@ -13,6 +13,9 @@ public class Product {
 	private Timestamp createTime;
 	private Timestamp updateTime;
 	
+	private int status;
+	private int position;
+	
 	private List<Image> thumbImages;
 	private List<Image> broadcastImages;
 	private List<Image> smallImages;
@@ -90,6 +93,18 @@ public class Product {
 	}
 	public void setDetailImages(List<Image> detailImages) {
 		this.detailImages = detailImages;
+	}
+	public int getPosition() {
+		return position;
+	}
+	public void setPosition(int position) {
+		this.position = position;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
 	}
 	
 

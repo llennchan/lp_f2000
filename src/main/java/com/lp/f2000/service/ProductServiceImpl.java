@@ -1,5 +1,6 @@
 package com.lp.f2000.service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,11 @@ public class ProductServiceImpl implements ProductService {
 		return productMapper.insert(product);
 		
 	}
+	
+	@Override
+	public int countProducts() {
+		return productMapper.countProducts();
+	}
 
 	@Override
 	public List<Product> listProducts() {
@@ -42,9 +48,38 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public void deleteProduct(int id) {
 		// TODO Auto-generated method stub
-		productMapper.deleteProduct(id);
+		Product p = productMapper.getProductById(id, 1);
+		if(p!=null) {
+			productMapper.deleteProduct(id);
+			productMapper.resetDeleteProductPos(p.getPosition());
+		}
+		
 	}
 	
+	@Override
+	public void updateProductStatus(int id, int status, Timestamp updateTime) {
+		productMapper.updateProductStatus(id, status, updateTime);
+	}
 	
+	@Override
+	public void upProduct(Product product) {
+		int pos = product.getPosition();
+		Product p = productMapper.getProductByPos(pos-1, 1);
+		if(p!=null) {
+			productMapper.updateProductPos(product.getId(), pos-1, product.getUpdateTime());
+			productMapper.updateProductPos(p.getId(), pos, p.getUpdateTime());
+		}
+
+	}
+	
+	@Override
+	public void downProduct(Product product) {
+		int pos = product.getPosition();
+		Product p = productMapper.getProductByPos(pos+1, 1);
+		if(p!=null) {
+			productMapper.updateProductPos(product.getId(), pos+1, product.getUpdateTime());
+			productMapper.updateProductPos(p.getId(), pos, p.getUpdateTime());
+		}
+	}
 
 }

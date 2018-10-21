@@ -68,6 +68,10 @@ public class ProductAdminController {
 		p.setDesc1(desc1);
 		p.setDesc2(desc2);
 		p.setDesc3(desc3);
+		
+		int pcount = productService.countProducts();
+		p.setPosition(pcount+1);
+		
 		int pid = productService.insert(p);
 		//插入图片
 		//1缩略图1  2轮播图 5 3商品小图1 4详情图10
@@ -127,24 +131,42 @@ public class ProductAdminController {
 		return Response.ofSuccess();
 	}
 	
-	@PostMapping(value = "update_product")
-	public Response updateProduct(@RequestParam(value = "id") int id,
-			@RequestParam(value = "name") String name,
-			@RequestParam(value = "desc1", required = false) String desc1,
-			@RequestParam(value = "desc2", required = false) String desc2,
-			@RequestParam(value = "desc3", required = false) String desc3
+	@PostMapping(value = "update_product_status")
+	public Response updateProductStatus(@RequestParam(value = "id") int id,
+			@RequestParam(value = "status") int status
 	) {
-		Product p = new Product();
-		p.setName(name);
-		p.setDesc1(desc1);
-		p.setDesc2(desc2);
-		p.setDesc3(desc3);
-		p.setId(id);
+		if(status!=Constant.PRODUCT_STATUS_NO&&status!=Constant.PRODUCT_STATUS_OFF) {
+			return Response.ofParamError("类型错误！");
+		}
 		Timestamp updateTime = new Timestamp(System.currentTimeMillis()); 
-		p.setUpdateTime(updateTime);
-		productService.updateProduct(p);
+		productService.updateProductStatus(id, status, updateTime);
 		return Response.ofSuccess();
 	}
+	
+	@PostMapping(value = "up_product")
+	public Response upProduct(@RequestParam(value = "id") int id
+	) {
+		Product p = productService.getById(id);
+		if(p!=null&&p.getPosition()>1) {
+			Timestamp updateTime = new Timestamp(System.currentTimeMillis()); 
+			p.setUpdateTime(updateTime);
+			productService.upProduct(p);
+		}
+		return Response.ofSuccess();
+	}
+	
+	@PostMapping(value = "down_product")
+	public Response downProduct(@RequestParam(value = "id") int id
+	) {
+		Product p = productService.getById(id);
+	    int pcount = productService.countProducts();
+		if(p!=null&&p.getPosition()<pcount) {
+			Timestamp updateTime = new Timestamp(System.currentTimeMillis()); 
+			p.setUpdateTime(updateTime);
+			productService.downProduct(p);
+		}
+		return Response.ofSuccess();
+	}	
 	
 	@PostMapping(value = "add_product_image")
 	public Response addProductImage(@RequestParam(value = "product_id") int productId,
