@@ -16,8 +16,9 @@ public class Constant {
 	public static final int IMAGE_PRODUCT_SMALL = 3;
 	public static final int IMAGE_PRODUCT_DETAIL = 4;
 	
-	public static final int PRODUCT_STATUS_NO = 1;
-	public static final int PRODUCT_STATUS_OFF = 2;
+	public static final int PRODUCT_STATUS_OFF = 1;
+	public static final int PRODUCT_STATUS_ON = 2;
+	
 			
 	
 }

@@ -135,7 +135,7 @@ public class ProductAdminController {
 	public Response updateProductStatus(@RequestParam(value = "id") int id,
 			@RequestParam(value = "status") int status
 	) {
-		if(status!=Constant.PRODUCT_STATUS_NO&&status!=Constant.PRODUCT_STATUS_OFF) {
+		if(status!=Constant.PRODUCT_STATUS_ON&&status!=Constant.PRODUCT_STATUS_OFF) {
 			return Response.ofParamError("类型错误！");
 		}
 		Timestamp updateTime = new Timestamp(System.currentTimeMillis()); 
