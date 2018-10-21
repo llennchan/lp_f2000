@@ -1,6 +1,7 @@
 package com.lp.f2000.entity;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class Product {
 	private int id;
@@ -11,6 +12,12 @@ public class Product {
 	private boolean isValid;
 	private Timestamp createTime;
 	private Timestamp updateTime;
+	
+	private List<Image> thumbImages;
+	private List<Image> broadcastImages;
+	private List<Image> smallImages;
+	private List<Image> detailImages;
+	
 	
 	public int getId() {
 		return id;
@@ -59,6 +66,30 @@ public class Product {
 	}
 	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
+	}
+	public List<Image> getThumbImages() {
+		return thumbImages;
+	}
+	public void setThumbImages(List<Image> thumbImages) {
+		this.thumbImages = thumbImages;
+	}
+	public List<Image> getBroadcastImages() {
+		return broadcastImages;
+	}
+	public void setBroadcastImages(List<Image> broadcastImages) {
+		this.broadcastImages = broadcastImages;
+	}
+	public List<Image> getSmallImages() {
+		return smallImages;
+	}
+	public void setSmallImages(List<Image> smallImages) {
+		this.smallImages = smallImages;
+	}
+	public List<Image> getDetailImages() {
+		return detailImages;
+	}
+	public void setDetailImages(List<Image> detailImages) {
+		this.detailImages = detailImages;
 	}
 	
 

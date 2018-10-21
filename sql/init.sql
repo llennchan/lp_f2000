@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS `product`;
 create table `product`
 (
     `id` INT(11) NOT NULL auto_increment,
+    `name` VARCHAR(255) COMMENT '名称',
 	`desc1` VARCHAR(255) COMMENT '描述1',
 	`desc2` VARCHAR(255) COMMENT '描述2',
 	`desc3` VARCHAR(255) COMMENT '描述3',

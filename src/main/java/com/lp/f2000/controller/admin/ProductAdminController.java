@@ -43,6 +43,12 @@ public class ProductAdminController {
 	@GetMapping(value = "products")
 	public Response<List<Product>> products() {
 		List<Product> ps = productService.listProducts();
+		for(Product p : ps) {
+			p.setBroadcastImages(imageService.getImagesByType(p.getId(), Constant.IMAGE_PRODUCT_BROADCAST));
+			p.setSmallImages(imageService.getImagesByType(p.getId(), Constant.IMAGE_PRODUCT_SMALL));
+			p.setThumbImages(imageService.getImagesByType(p.getId(), Constant.IMAGE_PRODUCT_THUMB));
+			p.setDetailImages(imageService.getImagesByType(p.getId(), Constant.IMAGE_PRODUCT_DETAIL));
+		}
 		return Response.ofSuccess(ps);
 	}
 
@@ -137,6 +143,23 @@ public class ProductAdminController {
 		Timestamp updateTime = new Timestamp(System.currentTimeMillis()); 
 		p.setUpdateTime(updateTime);
 		productService.updateProduct(p);
+		return Response.ofSuccess();
+	}
+	
+	@PostMapping(value = "add_product_image")
+	public Response addProductImage(@RequestParam(value = "product_id") int productId,
+			@RequestParam(value = "image_type") int imageType,
+			@RequestParam(value = "post_url") String postUrl
+	) {
+		if(imageType!=Constant.IMAGE_PRODUCT_THUMB&&imageType!=Constant.IMAGE_PRODUCT_BROADCAST&&imageType!=Constant.IMAGE_PRODUCT_SMALL&&imageType!=Constant.IMAGE_PRODUCT_DETAIL) {
+			return Response.ofParamError("图片类型错误！");
+		}
+		
+		Image image = new Image();
+		image.setPostUrl(postUrl);
+		image.setResourceId(productId);
+		image.setResourceType(imageType);
+		imageService.addImageUrl(image);
 		return Response.ofSuccess();
 	}
 	
