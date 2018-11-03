@@ -84,11 +84,34 @@ create table coupon
 	discount_rate float COMMENT '优惠折扣率',
 	min_cost DECIMAL(18,2) COMMENT '门槛金额',
 	max_discount_price DECIMAL(18,2) COMMENT '最高折扣金额',
+	num INT(11) DEFAULT 0 COMMENT '库存',
+	receive_start_time timestamp COMMENT '领取开始时间',
+	receive_end_time timestamp COMMENT '领取结束时间',
+	use_start_time timestamp COMMENT '使用开始时间',
+	use_end_time timestamp COMMENT '使用结束时间',
+	valid_day_num INT(11) DEFAULT 0 COMMENT '有效时间',
+	person_limit_num INT(11) DEFAULT 0 COMMENT '每人限领',
 	is_valid TINYINT(1) DEFAULT 1 COMMENT '是否有效',
 	create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
 	update_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
 	primary key(id)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='优惠券表';
+
+--  优惠券兑换表 coupon_code
+DROP TABLE IF EXISTS `coupon_code`;
+create table coupon_code
+(
+    id INT(11) NOT NULL auto_increment,
+    code VARCHAR(10) NOT NULL,
+	coupon_id INT(11) NOT NULL DEFAULT 0 COMMENT '优惠券id',
+	pay_order_id INT(11) NOT NULL DEFAULT 0 COMMENT '支付orderid',
+	product_order_id INT(11) NOT NULL DEFAULT 0 COMMENT '商品orderid',
+	product_id INT(11) NOT NULL DEFAULT 0 COMMENT '商品id',
+	user_id INT(11) NOT NULL DEFAULT 0 COMMENT '用户id',
+	is_valid TINYINT(1) DEFAULT 1 COMMENT '是否有效',
+	create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+	primary key(id)
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='优惠券兑换表';
 
 --  优惠券适用商品表 coupon_product
 DROP TABLE IF EXISTS `coupon_product`;
