@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lp.f2000.entity.Product;
+import com.lp.f2000.entity.Sku;
 import com.lp.f2000.mapper.ProductMapper;
 
 @Service
@@ -80,6 +81,26 @@ public class ProductServiceImpl implements ProductService {
 			productMapper.updateProductPos(product.getId(), pos+1, product.getUpdateTime());
 			productMapper.updateProductPos(p.getId(), pos, p.getUpdateTime());
 		}
+	}
+	
+	@Override
+	public void saveSku(Sku sku) {
+		if(sku.getId() > 0) {
+			productMapper.updateSku(sku);
+		}else {
+			productMapper.insertSku(sku);
+		}
+		
+	}
+	
+	@Override
+	public List<Sku> listProductSkus(int product_id){
+		return productMapper.listProductSkus(product_id);
+	}
+	
+	@Override
+	public void deleteSku(int skuid) {
+		productMapper.deleteSku(skuid);
 	}
 
 }

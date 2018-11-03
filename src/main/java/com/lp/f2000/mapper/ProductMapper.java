@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Update;
 
 import com.lp.f2000.entity.Category;
 import com.lp.f2000.entity.Product;
+import com.lp.f2000.entity.Sku;
 
 
 public interface ProductMapper {
@@ -59,5 +60,19 @@ public interface ProductMapper {
 	
 	@Update("UPDATE product SET position = #{position}, update_time = #{updateTime}  WHERE id = #{id} and is_valid=1")
 	public void updateProductPos(int id, int position, Timestamp updateTime);
+	
+	@Insert("INSERT INTO sku(name, product_id, num, price, discount_price) "
+			+ "VALUES(#{name}, #{productId}, #{num}, #{price}, #{discountPrice})")
+	@Options(useGeneratedKeys = true, keyProperty = "id")
+	public void insertSku(Sku sku);
+	
+	@Update("UPDATE sku SET name = #{name}, num = #{num}, price = #{price}, discount_price = #{discountPrice}, update_time = #{updateTime}  WHERE id = #{id}")
+	public void updateSku(Sku sku);
+	
+	@Select("SELECT * FROM sku WHERE product_id = #{product_id} and is_valid = 1")
+	public List<Sku> listProductSkus(int product_id);
+	
+	@Update("UPDATE sku SET is_valid = 0  WHERE id=#{id}")
+	public void deleteSku(int id);
 	
 }

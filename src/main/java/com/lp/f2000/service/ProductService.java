@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import com.lp.f2000.entity.Product;
+import com.lp.f2000.entity.Sku;
 
 public interface ProductService {
 	public Product getById(int id);
@@ -23,4 +24,10 @@ public interface ProductService {
 	public void upProduct(Product product);
 	
 	public void downProduct(Product product);
+	
+	public void saveSku(Sku sku);
+	
+	public List<Sku> listProductSkus(int product_id);
+	
+	public void deleteSku(int skuid);
 }

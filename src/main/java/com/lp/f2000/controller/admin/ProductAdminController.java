@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +20,7 @@ import com.lp.f2000.component.QiniuUtil;
 import com.lp.f2000.constant.Constant;
 import com.lp.f2000.entity.Image;
 import com.lp.f2000.entity.Product;
+import com.lp.f2000.entity.Sku;
 import com.lp.f2000.service.ImageService;
 import com.lp.f2000.service.ProductService;
 import com.lp.f2000.util.StringUtil;
@@ -43,11 +45,15 @@ public class ProductAdminController {
 	@GetMapping(value = "products")
 	public Response<List<Product>> products() {
 		List<Product> ps = productService.listProducts();
+		List<Sku> skus = null;
 		for(Product p : ps) {
 			p.setBroadcastImages(imageService.getImagesByType(p.getId(), Constant.IMAGE_PRODUCT_BROADCAST));
 			p.setSmallImages(imageService.getImagesByType(p.getId(), Constant.IMAGE_PRODUCT_SMALL));
 			p.setThumbImages(imageService.getImagesByType(p.getId(), Constant.IMAGE_PRODUCT_THUMB));
 			p.setDetailImages(imageService.getImagesByType(p.getId(), Constant.IMAGE_PRODUCT_DETAIL));
+			
+			skus = productService.listProductSkus(p.getId());
+			p.setSkus(skus);
 		}
 		return Response.ofSuccess(ps);
 	}
@@ -220,6 +226,28 @@ public class ProductAdminController {
         String path = qiniuUtil.uploadImg(inputStream, StringUtil.randomUUID());
         return path;
     }
-
+    
+    /*
+     *sku 
+     */
+	@PostMapping(value = "save_skus")
+	public Response saveProductSkus(@RequestBody Sku[] skus) {
+		
+		for(Sku sku : skus) {
+			System.out.println(sku.getId() + sku.getName());
+			productService.saveSku(sku);
+		}
+		
+		return Response.ofSuccess();
+	}
+    
+    /*
+     *sku 
+     */
+	@PostMapping(value = "delete_sku")
+	public Response deleteProductSku(@RequestParam(value = "id") int id) {
+		productService.deleteSku(id);
+		return Response.ofSuccess();
+	}
 	
 }

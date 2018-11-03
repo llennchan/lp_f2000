@@ -21,6 +21,8 @@ public class Product {
 	private List<Image> smallImages;
 	private List<Image> detailImages;
 	
+	private List<Sku> skus;
+	
 	
 	public int getId() {
 		return id;
@@ -105,6 +107,12 @@ public class Product {
 	}
 	public void setStatus(int status) {
 		this.status = status;
+	}
+	public List<Sku> getSkus() {
+		return skus;
+	}
+	public void setSkus(List<Sku> skus) {
+		this.skus = skus;
 	}
 	
 
