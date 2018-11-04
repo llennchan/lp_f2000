@@ -110,6 +110,8 @@ create table coupon_code
 	user_id INT(11) NOT NULL DEFAULT 0 COMMENT '用户id',
 	is_valid TINYINT(1) DEFAULT 1 COMMENT '是否有效',
 	create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+	receive_time timestamp  COMMENT '接受时间',
+	use_time timestamp  COMMENT '使用时间',
 	primary key(id)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='优惠券兑换表';
 
