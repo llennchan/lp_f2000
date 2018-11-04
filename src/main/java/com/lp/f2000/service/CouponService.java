@@ -25,4 +25,6 @@ public interface CouponService {
 	public void deleteCouponProducts(int cid);
 	public void deleteCouponCodes(int cid);
 	
+	public List<CouponProduct> ListCouponProductsByCid(int cid);
+	
 }

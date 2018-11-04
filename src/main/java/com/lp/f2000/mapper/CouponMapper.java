@@ -54,5 +54,8 @@ public interface CouponMapper {
     
 	@Update("UPDATE coupon_product SET is_valid = 0  WHERE coupon_id=#{cid} ")
 	public void deleteCouponProducts(int cid);
+	
+	@Select("SELECT * FROM coupon_product WHERE coupon_id=#{cid} AND is_valid=1")
+	public List<CouponProduct> ListCouponProductsByCid(int cid);
 
 }

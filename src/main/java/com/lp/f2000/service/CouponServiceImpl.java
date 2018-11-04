@@ -49,7 +49,13 @@ public class CouponServiceImpl implements CouponService {
 	@Override
 	public List<Coupon> listAllCoupons() {
 		// TODO Auto-generated method stub
-		return couponMapper.listCoupons();
+		List<Coupon> coupons = couponMapper.listCoupons();
+		List<CouponProduct> couponProducts;
+		for(Coupon cp : coupons) {
+			couponProducts = couponMapper.ListCouponProductsByCid(cp.getId());
+			cp.setCouponProducts(couponProducts);
+		}
+		return coupons;
 	}
 
 	@Override
@@ -72,6 +78,11 @@ public class CouponServiceImpl implements CouponService {
 	@Override
 	public void deleteCouponCodes(int cid) {
 		couponMapper.deleteCouponCodes(cid);
+	}
+	
+	@Override
+	public List<CouponProduct> ListCouponProductsByCid(int cid){
+		return couponMapper.ListCouponProductsByCid(cid);
 	}
 
 }

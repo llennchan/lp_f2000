@@ -2,6 +2,7 @@ package com.lp.f2000.entity;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.List;
 
 public class Coupon {
 	private int id;
@@ -23,6 +24,9 @@ public class Coupon {
 	private boolean isValid;
 	private Timestamp createTime;
 	private Timestamp updateTime;
+	
+	private List<CouponProduct> couponProducts;
+	
 	public int getId() {
 		return id;
 	}
@@ -124,6 +128,12 @@ public class Coupon {
 	}
 	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
+	}
+	public List<CouponProduct> getCouponProducts() {
+		return couponProducts;
+	}
+	public void setCouponProducts(List<CouponProduct> couponProducts) {
+		this.couponProducts = couponProducts;
 	}
 	
 	
