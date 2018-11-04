@@ -137,6 +137,32 @@ public class ProductAdminController {
 		return Response.ofSuccess();
 	}
 	
+	@PostMapping(value = "update_product")
+	public Response updateProduct(@RequestParam(value = "pid") int pid,
+			@RequestParam(value = "name") String name,
+			@RequestParam(value = "desc1", required = false) String desc1,
+			@RequestParam(value = "desc2", required = false) String desc2,
+			@RequestParam(value = "desc3", required = false) String desc3
+	) {
+		Product p = productService.getById(pid);
+		if(p==null) {
+			return Response.ofParamError("商品不存在");
+		}
+		p.setName(name);
+		if(desc1!=null) {
+			p.setDesc1(desc1);
+		}
+		if(desc2!=null) {
+			p.setDesc2(desc2);
+		}
+		if(desc3!=null) {
+			p.setDesc3(desc3);
+		}
+		
+		productService.updateProduct(p);
+		return Response.ofSuccess();
+	}
+	
 	@PostMapping(value = "update_product_status")
 	public Response updateProductStatus(@RequestParam(value = "id") int id,
 			@RequestParam(value = "status") int status
