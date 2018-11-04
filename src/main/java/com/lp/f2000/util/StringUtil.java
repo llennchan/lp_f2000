@@ -4,6 +4,7 @@ package com.lp.f2000.util;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.UUID;
@@ -11,12 +12,15 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.util.DigestUtils;
+import org.springframework.util.StringUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lp.f2000.constant.Constant;
 
 public class StringUtil {
 	public static ObjectMapper JSON_MAPPER = new ObjectMapper();
@@ -243,6 +247,33 @@ public class StringUtil {
 		}
 		return shortBuffer.toString();
 	 
+	}
+	
+	public static String getCsrfToken(String csrfTime) {
+		String str = Constant.CSRF_KEY + csrfTime;
+		String encodeStr=DigestUtils.md5DigestAsHex(str.getBytes());
+		return encodeStr;
+	}
+	
+	public static Boolean checkCsrf(String csrfToken, String csrfTime) {
+		//先验证是否为空
+		if(StringUtils.isEmpty(csrfToken) || StringUtils.isEmpty(csrfTime)) {
+			return false;
+		}
+		//验证是否过期
+		Long exp = new Long(csrfTime);
+		exp = exp + Constant.CSRF_EXP_MS;
+		long timeNow = new Date().getTime();
+		if(exp < timeNow) {
+			return false;
+		}
+		String str = Constant.CSRF_KEY + csrfTime;
+		String encodeStr=DigestUtils.md5DigestAsHex(str.getBytes());
+		if(encodeStr.equals(csrfToken)) {
+			return true;
+		}
+		//验证token是否是对的
+		return false;
 	}
 
 

@@ -24,5 +24,8 @@ public class Constant {
 	public static final int COUPON_TYPE_DIRECT = 1;
 	public static final int COUPON_TYPE_FULL = 2;
 	public static final int COUPON_TYPE_DISCOUNT = 3;
+	
+	public static final String CSRF_KEY = "sdgas53456hjkkdjgadfgk98sdnfuuiqrt892456nmityiuysdfashvx";
+	public static final int CSRF_EXP_MS = 3600000;
 			
 }

@@ -3,6 +3,7 @@ package com.lp.f2000.common;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,15 +22,21 @@ public class AbstractResponse {
 	private static Logger logger = LoggerFactory.getLogger(AbstractResponse.class);
 	private int status;
 	private String message;
+	private String csrfToken;
+	private String csrfTime;
 
 	public AbstractResponse() {
 		this.status = ReturnCode.SUCCESS;
+		this.csrfTime = new Date().getTime()  + "";
+		this.csrfToken = StringUtil.getCsrfToken(csrfTime);
 		setMessage("{success}");
 	}
 
 	public AbstractResponse(int status, String message) {
 		super();
 		this.status = status;
+		this.csrfTime = new Date().getTime()  + "";
+		this.csrfToken = StringUtil.getCsrfToken(csrfTime);
 		setMessage(message);
 	}
 
@@ -77,6 +84,22 @@ public class AbstractResponse {
 		this.status = status;
 	}
 
+	public String getCsrfToken() {
+		return csrfToken;
+	}
+
+	public void setCsrfToken(String csrfToken) {
+		this.csrfToken = csrfToken;
+	}
+
+	public String getcsrfTime() {
+		return csrfTime;
+	}
+
+	public void setcsrfTime(String csrfTime) {
+		this.csrfTime = csrfTime;
+	}
+
 	public boolean error() {
 		return !success();
 	}
@@ -87,6 +110,6 @@ public class AbstractResponse {
 
 	@Override
 	public String toString() {
-		return "ResponseBase [status=" + status + ", message=" + message + "]";
+		return "ResponseBase [status=" + status + ", csrfToken=" + csrfToken + ", csrfTime=" + csrfTime + ", message=" + message + "]";
 	}
 }
