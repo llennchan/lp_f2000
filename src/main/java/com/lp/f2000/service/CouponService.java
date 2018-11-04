@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.lp.f2000.entity.Coupon;
 import com.lp.f2000.entity.CouponCode;
+import com.lp.f2000.entity.CouponProduct;
 
 public interface CouponService {
 	public Coupon getById(int id);
@@ -11,6 +12,7 @@ public interface CouponService {
 	public int insert(Coupon coupon);
 	public int insertCouponCode(CouponCode couponCode);
 	public void insertCouponCodes(List<CouponCode> couponCodes);
+	public void insertCouponProducts(List<CouponProduct> couponProducts);
 	
 	public void updateCoupon(Coupon coupon);
 	
@@ -19,5 +21,8 @@ public interface CouponService {
 	public List<Coupon> listCoupons(int pid);
 	
 	public void deleteCoupon(int cid);
+	
+	public void deleteCouponProducts(int cid);
+	public void deleteCouponCodes(int cid);
 	
 }

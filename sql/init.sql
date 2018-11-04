@@ -102,7 +102,7 @@ DROP TABLE IF EXISTS `coupon_code`;
 create table coupon_code
 (
     id INT(11) NOT NULL auto_increment,
-    code VARCHAR(10) NOT NULL,
+    code VARCHAR(8) NOT NULL,
 	coupon_id INT(11) NOT NULL DEFAULT 0 COMMENT '优惠券id',
 	pay_order_id INT(11) NOT NULL DEFAULT 0 COMMENT '支付orderid',
 	product_order_id INT(11) NOT NULL DEFAULT 0 COMMENT '商品orderid',

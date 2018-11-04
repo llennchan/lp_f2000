@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.lp.f2000.entity.Coupon;
 import com.lp.f2000.entity.CouponCode;
+import com.lp.f2000.entity.CouponProduct;
 import com.lp.f2000.mapper.CouponMapper;
 
 @Service
@@ -33,6 +34,11 @@ public class CouponServiceImpl implements CouponService {
 	public void insertCouponCodes(List<CouponCode> couponCodes) {
 		couponMapper.insertCouponCodes(couponCodes);
 	}
+	
+	@Override
+	public void insertCouponProducts(List<CouponProduct> couponProducts) {
+		couponMapper.insertCouponProducts(couponProducts);
+	}
 
 	@Override
 	public void updateCoupon(Coupon coupon) {
@@ -56,6 +62,16 @@ public class CouponServiceImpl implements CouponService {
 	public void deleteCoupon(int cid) {
 		// TODO Auto-generated method stub
 		couponMapper.deleteCoupon(cid);
+	}
+	
+	@Override
+	public void deleteCouponProducts(int cid) {
+		couponMapper.deleteCouponProducts(cid);
+	}
+	
+	@Override
+	public void deleteCouponCodes(int cid) {
+		couponMapper.deleteCouponCodes(cid);
 	}
 
 }

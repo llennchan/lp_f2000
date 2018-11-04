@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Update;
 
 import com.lp.f2000.entity.Coupon;
 import com.lp.f2000.entity.CouponCode;
+import com.lp.f2000.entity.CouponProduct;
 
 
 public interface CouponMapper {
@@ -44,5 +45,14 @@ public interface CouponMapper {
 	
     @InsertProvider(type = CouponProvider.class, method = "insertCouponCodes")  
 	public void insertCouponCodes(@Param("list") List<CouponCode> codes);
+    
+    @InsertProvider(type = CouponProvider.class, method = "insertCouponProducts")  
+	public void insertCouponProducts(@Param("list") List<CouponProduct> couponProducts);
+    
+	@Update("UPDATE coupon_code SET is_valid = 0  WHERE coupon_id=#{cid} ")
+	public void deleteCouponCodes(int cid);
+    
+	@Update("UPDATE coupon_product SET is_valid = 0  WHERE coupon_id=#{cid} ")
+	public void deleteCouponProducts(int cid);
 
 }

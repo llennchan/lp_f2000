@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lp.f2000.common.Response;
 import com.lp.f2000.entity.Coupon;
 import com.lp.f2000.entity.CouponCode;
+import com.lp.f2000.entity.CouponProduct;
+import com.lp.f2000.entity.Product;
 import com.lp.f2000.service.CouponService;
+import com.lp.f2000.service.ProductService;
 import com.lp.f2000.util.StringUtil;
 
 @RestController
@@ -24,6 +27,9 @@ import com.lp.f2000.util.StringUtil;
 public class CouponAdminController {
 	@Autowired
 	private CouponService couponService;
+	
+	@Autowired
+	private ProductService productService;
 
 	@GetMapping(value = "coupon")
 	public Response<Coupon> coupon(@RequestParam("coupon_id") int couponId) {
@@ -47,6 +53,7 @@ public class CouponAdminController {
 	@PostMapping(value = "add_coupon")
 	public Response addCoupon(@RequestParam(value = "name", required = true) String name,
 			@RequestParam(value = "coupon_type", required = true) int couponType,
+			@RequestParam(value = "product_ids", required = true) String productIds,
 			@RequestParam(value = "cut_money", required = true) BigDecimal cutMoney,
 			@RequestParam(value = "discount_rate", required = true) float discountRate,
 			@RequestParam(value = "min_cost", required = true) BigDecimal minCost,
@@ -79,6 +86,25 @@ public class CouponAdminController {
 		
 		int couponId = couponService.insert(c);
 		
+		String[] pidStrs = productIds.split(",");
+		int pid;
+		Product p = null;
+		CouponProduct cp = null;
+		List<CouponProduct> cpList = new ArrayList<CouponProduct>();
+		for(String pidStr : pidStrs) {
+			pid = Integer.parseInt(pidStr); 
+			p = productService.getById(pid);
+			if(p!=null) {
+				cp = new CouponProduct();
+				cp.setCouponId(couponId);
+				cp.setProductId(pid);
+				cpList.add(cp);
+			}
+		}
+		if(!cpList.isEmpty()) {
+			couponService.insertCouponProducts(cpList);
+		}
+		
 		CouponCode cc = null;
 		HashSet<String> set = new HashSet<String>();
 		StringUtil.randomCodeSet(num, set);
@@ -105,6 +131,7 @@ public class CouponAdminController {
 	@PostMapping(value = "update_coupon")
 	public Response updateCoupon(@RequestParam(value = "id", required = true) int id,
 			@RequestParam(value = "name", required = true) String name,
+			@RequestParam(value = "product_ids", required = true) String productIds,
 			@RequestParam(value = "coupon_type", required = true) int couponType,
 			@RequestParam(value = "cut_money", required = true) BigDecimal cutMoney,
 			@RequestParam(value = "discount_rate", required = true) float discountRate,
@@ -138,13 +165,37 @@ public class CouponAdminController {
 		c.setValidDayNum(validDayNum);
 		c.setPersonLimitNum(personLimitNum);
 		
-		couponService.insert(c);
+		couponService.updateCoupon(c);
+		
+		//先删除关联的商品
+		couponService.deleteCouponProducts(c.getId());
+		
+		String[] pidStrs = productIds.split(",");
+		int pid;
+		Product p = null;
+		CouponProduct cp = null;
+		List<CouponProduct> cpList = new ArrayList<CouponProduct>();
+		for(String pidStr : pidStrs) {
+			pid = Integer.parseInt(pidStr); 
+			p = productService.getById(pid);
+			if(p!=null) {
+				cp = new CouponProduct();
+				cp.setCouponId(c.getId());
+				cp.setProductId(pid);
+				cpList.add(cp);
+			}
+		}
+		if(!cpList.isEmpty()) {
+			couponService.insertCouponProducts(cpList);
+		}
 		return Response.ofSuccess();
 	}
 	
 	@PostMapping(value = "delete_coupon")
 	public Response deleteCoupon(@RequestParam(value = "coupon_id") int coupon_id) {
 		couponService.deleteCoupon(coupon_id);
+		couponService.deleteCouponProducts(coupon_id);
+		couponService.deleteCouponCodes(coupon_id);
 		return Response.ofSuccess();
 	}
 	
