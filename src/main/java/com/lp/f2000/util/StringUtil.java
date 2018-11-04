@@ -4,6 +4,7 @@ package com.lp.f2000.util;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.UUID;
 import java.util.zip.GZIPInputStream;
@@ -203,5 +204,46 @@ public class StringUtil {
 			return null;
 		}
 	}
+	
+	
+	/*
+	 * 返回随机code
+	 * */
+	public static void randomCodeSet(int n, HashSet<String> set) {  
+	       if(set==null || set.size() >= n) {
+	    	   return;
+	       }
+		   for (int i = 0; i < n; i++) {  
+	           // 调用Math.random()方法  
+	           String c = generateShortUuid();  
+	           set.add(c);// 将不同的数存入HashSet中  
+	       }  
+	       int setSize = set.size();  
+	       // 如果存入的数小于指定生成的个数，则调用递归再生成剩余个数的随机数，如此循环，直到达到指定大小  
+	       if (setSize < n) {  
+	    	   randomCodeSet(n - setSize, set);// 递归  
+	       }
+	}  
+	
+	public static String[] chars = new String[] { "a", "b", "c", "d", "e", "f",
+			"g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
+			"t", "u", "v", "w", "x", "y", "z", "0", "1", "2", "3", "4", "5",
+			"6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "I",
+			"J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V",
+			"W", "X", "Y", "Z" };
+ 
+	 
+	public static String generateShortUuid() {
+		StringBuffer shortBuffer = new StringBuffer();
+		String uuid = UUID.randomUUID().toString().replace("-", "");
+		for (int i = 0; i < 8; i++) {
+			String str = uuid.substring(i * 4, i * 4 + 4);
+			int x = Integer.parseInt(str, 16);
+			shortBuffer.append(chars[x % 0x3E]);
+		}
+		return shortBuffer.toString();
+	 
+	}
+
 
 }

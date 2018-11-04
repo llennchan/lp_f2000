@@ -20,5 +20,9 @@ public class Constant {
 	public static final int PRODUCT_STATUS_ON = 2;
 	
 			
-	
+	//优惠券配置
+	public static final int COUPON_TYPE_DIRECT = 1;
+	public static final int COUPON_TYPE_FULL = 2;
+	public static final int COUPON_TYPE_DISCOUNT = 3;
+			
 }
