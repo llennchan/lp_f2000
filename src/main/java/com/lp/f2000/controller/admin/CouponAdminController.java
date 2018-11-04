@@ -38,14 +38,9 @@ public class CouponAdminController {
 	}
 	
 	@GetMapping(value = "coupons")
-	public Response<List<Coupon>> coupons(@RequestParam(value = "product_id", required = false) int productId) {
+	public Response<List<Coupon>> coupons() {
 		List<Coupon> cs = null;
-		if(productId > 0) {
-			cs = couponService.listCoupons(productId);
-		}else {
-			cs = couponService.listAllCoupons();
-		}
-		
+		cs = couponService.listAllCoupons();
 		return Response.ofSuccess(cs);
 	}
 

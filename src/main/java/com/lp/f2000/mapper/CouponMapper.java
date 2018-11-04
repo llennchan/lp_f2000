@@ -23,10 +23,10 @@ public interface CouponMapper {
 	@Update("UPDATE coupon SET name=#{name}, coupon_type=#{couponType}, cut_money=#{cutMoney}, discount_rate=#{discountRate}, min_cost=#{minCost}, max_discount_price=#{maxDiscountPrice}, num=#{num}, receive_start_time=#{receiveStartTime}, receive_end_time=#{receiveEndTime}, use_start_time=#{useStartTime}, use_end_time=#{useEndTime}, valid_day_num, person_limit_num=#{personLimitNum}, update_time=#{updateTime} WHERE id=#{id}")
 	public void updateCoupon(Coupon coupon);
 	
-	@Select("SELECT * FROM coupon WHERE and is_valid=1 ")
+	@Select("SELECT * FROM coupon WHERE is_valid=1 order by id desc")
 	public List<Coupon> listCoupons();
 	
-	@Select("SELECT * FROM coupon WHERE and is_valid=1 ")
+	@Select("SELECT * FROM coupon WHERE is_valid=1 order by id desc ")
 	public List<Coupon> listCouponsByPid(int pid);
 	
 	@Select("SELECT * FROM coupon WHERE id=#{id} AND is_valid=1")
