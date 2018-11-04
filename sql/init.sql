@@ -85,10 +85,10 @@ create table coupon
 	min_cost DECIMAL(18,2) COMMENT '门槛金额',
 	max_discount_price DECIMAL(18,2) COMMENT '最高折扣金额',
 	num INT(11) DEFAULT 0 COMMENT '库存',
-	receive_start_time timestamp COMMENT '领取开始时间',
-	receive_end_time timestamp COMMENT '领取结束时间',
-	use_start_time timestamp COMMENT '使用开始时间',
-	use_end_time timestamp COMMENT '使用结束时间',
+	receive_start_time timestamp NULL COMMENT '领取开始时间',
+	receive_end_time timestamp NULL COMMENT '领取结束时间',
+	use_start_time timestamp NULL COMMENT '使用开始时间',
+	use_end_time timestamp NULL COMMENT '使用结束时间',
 	valid_day_num INT(11) DEFAULT 0 COMMENT '有效时间',
 	person_limit_num INT(11) DEFAULT 0 COMMENT '每人限领',
 	is_valid TINYINT(1) DEFAULT 1 COMMENT '是否有效',
@@ -110,8 +110,8 @@ create table coupon_code
 	user_id INT(11) NOT NULL DEFAULT 0 COMMENT '用户id',
 	is_valid TINYINT(1) DEFAULT 1 COMMENT '是否有效',
 	create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-	receive_time timestamp  COMMENT '接受时间',
-	use_time timestamp  COMMENT '使用时间',
+	receive_time timestamp NULL COMMENT '接受时间',
+	use_time timestamp NULL COMMENT '使用时间',
 	primary key(id)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='优惠券兑换表';
 
