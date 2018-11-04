@@ -15,6 +15,9 @@ public class CsrfInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        if(request.getRequestURI().equals("/admin/login") || request.getRequestURI().equals("/admin/logout")) {
+        	return  true;
+        }
     	if(!request.getMethod().toLowerCase().equals("get")) {
 	        String csrfToken=request.getHeader("csrfToken");
 	        String csrfTime=request.getHeader("csrfTime");
