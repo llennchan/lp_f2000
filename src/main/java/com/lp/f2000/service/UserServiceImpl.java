@@ -15,6 +15,7 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserMapper userMapper;
 	
+	
 	@Override
 	public User getById(int id) {
 		// TODO Auto-generated method stub
