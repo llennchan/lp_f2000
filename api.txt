@@ -120,6 +120,7 @@ person_day_limit_num 每日限
 name 
 description
 coupon_type (1直减 2满减 3折扣)
+universal （是否所有商品通用传true/false）
 product_ids (指定商品ID多个逗号分隔 1,2,3)
 cut_money   
 discount_rate
