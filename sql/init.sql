@@ -94,6 +94,7 @@ create table coupon
 	valid_day_num INT(11) DEFAULT 0 COMMENT '有效时间',
 	person_limit_num INT(11) DEFAULT 0 COMMENT '每人限领',
 	person_day_limit_num INT(11) DEFAULT 0 COMMENT '每人每日限领',
+	can_use TINYINT(1) DEFAULT 0 COMMENT '是否可用',
 	is_valid TINYINT(1) DEFAULT 1 COMMENT '是否有效',
 	create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
 	update_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
