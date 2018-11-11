@@ -20,7 +20,8 @@ public class AdminLoginInterceptor extends HandlerInterceptorAdapter {
             if (obj != null && obj == true){
             	return  true;
             }
-        	response.getWriter().write("{status:-1, message:'please login admin account''}");
+            response.setContentType("application/json");
+        	response.getWriter().write("{status:-1, message:'please login admin account'}");
             return  false;
         }
         	

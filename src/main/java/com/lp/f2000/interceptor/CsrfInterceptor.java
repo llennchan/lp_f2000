@@ -31,7 +31,8 @@ public class CsrfInterceptor extends HandlerInterceptorAdapter {
 	        if(!StringUtils.isEmpty(csrfToken) && !StringUtils.isEmpty(csrfTime) && StringUtil.checkCsrf(csrfToken, csrfTime)){//如果验证成功返回true（这里直接写false来模拟验证失败的处理）
 	            return true;
 	        }else{//如果验证失败
-	            response.getWriter().write("{status:-1, message:'csrf_token error''}");
+	        	response.setContentType("application/json");
+	            response.getWriter().write("{status:-1, message:'csrf_token error'}");
 	            return false;
 	        }
     	}else {

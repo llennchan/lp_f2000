@@ -13,7 +13,8 @@ import com.lp.f2000.common.Response;
 @RequestMapping(value = "admin", produces = "application/json;charset=UTF-8")
 public class LoginAdminController {
 
-	@PostMapping(value = "login")
+	//@PostMapping(value = "login")
+	@RequestMapping(value = "login")
 	public Response login(@RequestParam(value = "username") String username, @RequestParam(value = "password") String password, HttpServletRequest request) {
 		if(username != null && password!=null && username.equals("lqf_admin") && password.equals("lp_lqf_2000")) {
 			request.getSession().setAttribute("admin_user", true);

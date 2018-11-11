@@ -227,3 +227,18 @@ create table order_coupon
 	update_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
 	primary key(id)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='订单优惠券使用表';
+
+--  购物车表 cart
+DROP TABLE IF EXISTS `cart_product`;
+create table cart_product
+(
+    id INT(11) NOT NULL auto_increment,
+    product_id INT(11) NOT NULL DEFAULT 0 COMMENT '商品id',
+	sku_id INT(11) NOT NULL DEFAULT 0 COMMENT '商品sku id',
+	num INT(11) NOT NULL DEFAULT 0 COMMENT '商品sku数量',
+	user_id INT(11) NOT NULL DEFAULT 0 COMMENT '用户id',
+	is_valid TINYINT(1) DEFAULT 1 COMMENT '是否有效',
+	create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+	update_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+	primary key(id)
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='购物车表';
