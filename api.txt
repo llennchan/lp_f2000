@@ -1,0 +1,139 @@
+
+==================================================================
+服务端代码github地址 https://github.com/ljyspot/lp_f2000
+
+/admin/* 需要先登录
+
+/admin/login?username=lqf_admin&password=lp_lqf_2000 (POST登录)
+/admin/logout (登出)
+
+另外以下所有的POST类型接口除了下面列出来的参数外必须加上下面两个参数防止(CSRF跨站攻击) ,所有GET请求返回json数据会包含"csrfToken":xxx, "csrfTime":xxxx（时间戳 1小时有效）
+csrfToken 放在表单参数或者HTTP header里面
+csrfTime 放在表单参数或者HTTP header里面
+
+==================接口返回json说明=================================
+{
+    "status": 0,
+    "message": "成功",
+    "data": [
+], "csrfToken":xxx, "csrfTime":xxxx
+}
+status = 0
+0;//成功
+-1; //参数错误
+-2; //数据已存在
+-3; //系统错误
+-4; //未登陆
+-5; //数据不存在
+-6; //拒绝操作
+500; //服务器错误
+404; //资源不存在
+
+
+
+=================ADMIN 管理后台API===============================
+接口host:  http://47.98.165.115:8080
+
+1、添加产品/admin/add_product  (POST)
+name
+desc1
+desc2
+desc3
+images1 （限制1个）
+images2 （限制5个）
+images3  （限制1个）
+images4   （限制10个）
+
+2、编辑产品/admin/update_product  (POST)
+id
+name
+desc1
+desc2
+desc3
+
+3、添加产品图片/admin/add_product_image  (POST)
+product_id
+image_type （产品图片类型1， 2， 3， 4）
+post_url
+
+4、编辑产品图片/admin/update_product_image  (POST)
+image_id
+post_url
+
+
+5、删除产品图片/admin/delete_product_image  (POST)
+image_id
+
+
+6、删除产品/admin/delete_product  (POST)
+id
+
+7、产品列表/admin/products  (GET)
+
+8、上传图片接口/admin/upload_img (POST) 返回图片地址
+editormd-image-file 图片文件input name
+
+9、产品上下架/admin/update_product_status  (POST)
+id
+status （1下架 2上架）
+
+10、产品前置 /admin/up_product  (POST)
+id
+
+11、产品后置 /admin/down_product  (POST)
+id
+
+12、添加更新 sku (POST)
+/admin/save_skus
+提交json格式(有id就是更新 没有的是新建)
+
+[ {"id":1, "name": "sku1", "productId": 1,"num": 10, "price": 100, "discountPrice": 88 }, { "name": "sku1", "productId": 1,"num": 10, "price": 100, "discountPrice": 88 }]
+
+13、删除sku (POST)
+/admin/delete_sku
+id=xxx
+
+14、新建优惠券(POST)
+/admin/add_coupon
+
+name 
+description
+coupon_type (1直减 2满减 3折扣)
+product_ids (指定商品ID多个逗号分隔 1,2,3)
+cut_money   
+discount_rate
+min_cost
+max_discount_price
+num
+receive_start_time
+receive_end_time
+use_start_time
+use_end_time
+person_limit_num
+person_day_limit_num 每日限
+
+15、编辑优惠券(POST)
+/admin/update_coupon
+
+name 
+description
+coupon_type (1直减 2满减 3折扣)
+product_ids (指定商品ID多个逗号分隔 1,2,3)
+cut_money   
+discount_rate
+min_cost
+max_discount_price
+库存不能再编辑了
+receive_start_time
+receive_end_time
+use_start_time
+use_end_time
+person_limit_num
+person_day_limit_num 每日限
+
+16、删除优惠券(POST)
+/admin/delete_coupon
+coupon_id=xxx
+
+17、所有优惠券列表（GET）
+/admin/coupons

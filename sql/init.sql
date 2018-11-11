@@ -79,6 +79,7 @@ create table coupon
 (
     id INT(11) NOT NULL auto_increment,
 	name VARCHAR(255) COMMENT '优惠券名称',
+	description VARCHAR(255) COMMENT '优惠券描述',
 	coupon_type TINYINT(1) DEFAULT 0 COMMENT '优惠券类型直减券：1；满减券：2；折扣券：3',
 	cut_money DECIMAL(18,2) COMMENT '优惠金额',
 	discount_rate float COMMENT '优惠折扣率',
@@ -91,6 +92,7 @@ create table coupon
 	use_end_time timestamp NULL COMMENT '使用结束时间',
 	valid_day_num INT(11) DEFAULT 0 COMMENT '有效时间',
 	person_limit_num INT(11) DEFAULT 0 COMMENT '每人限领',
+	person_day_limit_num INT(11) DEFAULT 0 COMMENT '每人每日限领',
 	is_valid TINYINT(1) DEFAULT 1 COMMENT '是否有效',
 	create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
 	update_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',

@@ -47,6 +47,7 @@ public class CouponAdminController {
 	
 	@PostMapping(value = "add_coupon")
 	public Response addCoupon(@RequestParam(value = "name", required = true) String name,
+			@RequestParam(value = "description", required = true) String description,
 			@RequestParam(value = "coupon_type", required = true) int couponType,
 			@RequestParam(value = "product_ids", required = true) String productIds,
 			@RequestParam(value = "cut_money", required = true) BigDecimal cutMoney,
@@ -59,13 +60,15 @@ public class CouponAdminController {
 			@RequestParam(value = "use_start_time", required = true) Timestamp useStartTime,
 			@RequestParam(value = "use_end_time", required = true) Timestamp useEndTime,
 			@RequestParam(value = "valid_day_num", required = false) int validDayNum,
-			@RequestParam(value = "person_limit_num", required = true) int personLimitNum
+			@RequestParam(value = "person_limit_num", required = true) int personLimitNum,
+			@RequestParam(value = "person_day_limit_num", required = true) int personDayLimitNum
 	) {
 		if(num > 10000) {
 			return Response.ofParamError("优惠券库存量超过上限10000");
 		}
 		Coupon c = new Coupon();
 		c.setName(name);
+		c.setDescription(description);
 		c.setCouponType(couponType);
 		c.setCutMoney(cutMoney);
 		c.setDiscountRate(discountRate);
@@ -78,6 +81,7 @@ public class CouponAdminController {
 		c.setUseEndTime(useEndTime);
 		c.setValidDayNum(validDayNum);
 		c.setPersonLimitNum(personLimitNum);
+		c.setPersonDayLimitNum(personDayLimitNum);
 		
 		int couponId = couponService.insert(c);
 		
@@ -126,6 +130,7 @@ public class CouponAdminController {
 	@PostMapping(value = "update_coupon")
 	public Response updateCoupon(@RequestParam(value = "id", required = true) int id,
 			@RequestParam(value = "name", required = true) String name,
+			@RequestParam(value = "description", required = true) String description,
 			@RequestParam(value = "product_ids", required = true) String productIds,
 			@RequestParam(value = "coupon_type", required = true) int couponType,
 			@RequestParam(value = "cut_money", required = true) BigDecimal cutMoney,
@@ -138,7 +143,8 @@ public class CouponAdminController {
 			@RequestParam(value = "use_start_time", required = true) Timestamp useStartTime,
 			@RequestParam(value = "use_start_time", required = true) Timestamp useEndTime,
 			@RequestParam(value = "valid_day_num", required = false) int validDayNum,
-			@RequestParam(value = "person_limit_num", required = true) int personLimitNum
+			@RequestParam(value = "person_limit_num", required = true) int personLimitNum,
+			@RequestParam(value = "person_day_limit_num", required = true) int personDayLimitNum
 	) {
 		
 		Coupon c = couponService.getById(id);
@@ -147,6 +153,7 @@ public class CouponAdminController {
 		}
 		
 		c.setName(name);
+		c.setDescription(description);
 		c.setCouponType(couponType);
 		c.setCutMoney(cutMoney);
 		c.setDiscountRate(discountRate);
@@ -159,6 +166,7 @@ public class CouponAdminController {
 		c.setUseEndTime(useEndTime);
 		c.setValidDayNum(validDayNum);
 		c.setPersonLimitNum(personLimitNum);
+		c.setPersonDayLimitNum(personDayLimitNum);
 		
 		couponService.updateCoupon(c);
 		

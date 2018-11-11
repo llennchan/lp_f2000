@@ -15,12 +15,12 @@ import com.lp.f2000.entity.CouponProduct;
 
 public interface CouponMapper {
 	
-	@Insert("INSERT INTO coupon(name, coupon_type, cut_money, discount_rate, min_cost, max_discount_price, num, receive_start_time, receive_end_time, use_start_time, use_end_time, valid_day_num, person_limit_num) "
-			+ "VALUES(#{name}, #{couponType}, #{cutMoney}, #{discountRate}, #{minCost}, #{maxDiscountPrice}, #{num}, #{receiveStartTime}, #{receiveEndTime}, #{useStartTime}, #{useEndTime}, #{validDayNum}, #{personLimitNum})")
+	@Insert("INSERT INTO coupon(name, description, coupon_type, cut_money, discount_rate, min_cost, max_discount_price, num, receive_start_time, receive_end_time, use_start_time, use_end_time, valid_day_num, person_limit_num, person_day_limit_num) "
+			+ "VALUES(#{name}, #{description}, #{couponType}, #{cutMoney}, #{discountRate}, #{minCost}, #{maxDiscountPrice}, #{num}, #{receiveStartTime}, #{receiveEndTime}, #{useStartTime}, #{useEndTime}, #{validDayNum}, #{personLimitNum}, #{personDayLimitNum})")
 	@Options(useGeneratedKeys = true, keyProperty = "id")
 	public int insertCoupon(Coupon coupon);
 	
-	@Update("UPDATE coupon SET name=#{name}, coupon_type=#{couponType}, cut_money=#{cutMoney}, discount_rate=#{discountRate}, min_cost=#{minCost}, max_discount_price=#{maxDiscountPrice}, num=#{num}, receive_start_time=#{receiveStartTime}, receive_end_time=#{receiveEndTime}, use_start_time=#{useStartTime}, use_end_time=#{useEndTime}, valid_day_num, person_limit_num=#{personLimitNum}, update_time=#{updateTime} WHERE id=#{id}")
+	@Update("UPDATE coupon SET name=#{name}, description=#{description}, coupon_type=#{couponType}, cut_money=#{cutMoney}, discount_rate=#{discountRate}, min_cost=#{minCost}, max_discount_price=#{maxDiscountPrice}, num=#{num}, receive_start_time=#{receiveStartTime}, receive_end_time=#{receiveEndTime}, use_start_time=#{useStartTime}, use_end_time=#{useEndTime}, valid_day_num, person_limit_num=#{personLimitNum}, person_day_limit_num=#{personDayLimitNum}, update_time=#{updateTime} WHERE id=#{id}")
 	public void updateCoupon(Coupon coupon);
 	
 	@Select("SELECT * FROM coupon WHERE is_valid=1 order by id desc")

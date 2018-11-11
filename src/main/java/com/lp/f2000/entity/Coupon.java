@@ -7,6 +7,7 @@ import java.util.List;
 public class Coupon {
 	private int id;
 	private String name;
+	private String description;
 	private int couponType;
 	private BigDecimal cutMoney;
 	private float discountRate;
@@ -20,6 +21,7 @@ public class Coupon {
 	private Timestamp useEndTime;
 	private int validDayNum;
 	private int personLimitNum;
+	private int personDayLimitNum;
 	
 	private boolean isValid;
 	private Timestamp createTime;
@@ -134,6 +136,18 @@ public class Coupon {
 	}
 	public void setCouponProducts(List<CouponProduct> couponProducts) {
 		this.couponProducts = couponProducts;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public int getPersonDayLimitNum() {
+		return personDayLimitNum;
+	}
+	public void setPersonDayLimitNum(int personDayLimitNum) {
+		this.personDayLimitNum = personDayLimitNum;
 	}
 	
 	
