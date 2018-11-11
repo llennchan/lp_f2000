@@ -9,6 +9,7 @@ public class Coupon {
 	private String name;
 	private String description;
 	private int couponType;
+	private boolean universal;
 	private BigDecimal cutMoney;
 	private float discountRate;
 	private BigDecimal minCost;
@@ -46,6 +47,12 @@ public class Coupon {
 	}
 	public void setCouponType(int couponType) {
 		this.couponType = couponType;
+	}
+	public boolean isUniversal() {
+		return universal;
+	}
+	public void setUniversal(boolean universal) {
+		this.universal = universal;
 	}
 	public BigDecimal getCutMoney() {
 		return cutMoney;

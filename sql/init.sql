@@ -86,6 +86,7 @@ create table coupon
 	min_cost DECIMAL(18,2) COMMENT '门槛金额',
 	max_discount_price DECIMAL(18,2) COMMENT '最高折扣金额',
 	num INT(11) DEFAULT 0 COMMENT '库存',
+	universal TINYINT(1) DEFAULT 0 COMMENT '是否通用',
 	receive_start_time timestamp NULL COMMENT '领取开始时间',
 	receive_end_time timestamp NULL COMMENT '领取结束时间',
 	use_start_time timestamp NULL COMMENT '使用开始时间',

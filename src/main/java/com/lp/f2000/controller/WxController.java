@@ -2,6 +2,7 @@ package com.lp.f2000.controller;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lp.f2000.common.Response;
@@ -41,7 +42,7 @@ public class WxController {
     }
  
     @RequestMapping(value = "/wx_login")
-    public Response<Object> goToIndex(HttpServletRequest request) throws IOException {
+    public Response<Object> wxLogin(HttpServletRequest request) throws IOException {
         String code = request.getParameter("code");
         if(code==null||"".equals(code)){
             return Response.ofParamError("code为空");
@@ -75,6 +76,30 @@ public class WxController {
 		
 		request.getSession().setAttribute("current_user", currentUser);
 		
-		return Response.ofSuccess(wxuser);
+		return Response.ofSuccess(currentUser);
      }
+    
+    @RequestMapping(value = "/test_login")
+    public Response<Object> testLogin(HttpServletRequest request) throws IOException {
+    	com.lp.f2000.entity.User rsUser = (com.lp.f2000.entity.User) request.getSession().getAttribute("current_user");
+    	if(rsUser!=null && rsUser.getId() > 0) {
+    		return Response.ofSuccess(rsUser);
+    	}
+    	
+    	String test_wx_openid = "test_user_openid_sdgkdkfbgsdfhjk456345636";
+    	String test_wx_nickname = "test_user";
+		com.lp.f2000.entity.User currentUser = userService.getByWxOpenid(test_wx_openid);
+		if(currentUser==null) {
+			currentUser = new com.lp.f2000.entity.User();
+			currentUser.setWxOpenid(test_wx_openid);
+			currentUser.setWxNicname(test_wx_nickname);
+			int uid = userService.insertUser(currentUser);
+			currentUser.setId(uid);
+		}
+		
+		request.getSession().setAttribute("current_user", currentUser);
+		
+		return Response.ofSuccess(currentUser);
+    }
+    
 }

@@ -9,6 +9,9 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.lp.f2000.entity.Address;
+import com.lp.f2000.entity.PfArea;
+import com.lp.f2000.entity.PfCity;
+import com.lp.f2000.entity.PfProvince;
 import com.lp.f2000.entity.User;
 
 
@@ -37,6 +40,9 @@ public interface UserMapper {
 	@Select("SELECT * FROM address WHERE user_id=#{uid} AND is_valid=1 order id desc")
 	public List<Address> getAddressesByuid(int uid);
 	
+	@Select("SELECT * FROM address WHERE id=#{id} AND is_valid=1")
+	public Address getAddressByid(int id);
+	
 	@Select("SELECT * FROM address WHERE user_id=#{uid} AND is_default=1 AND is_valid=1")
 	public Address getDefaultAddressByuid(int uid);
 	
@@ -47,6 +53,15 @@ public interface UserMapper {
 	public void cancelAddressesDefaultByUid(int uid);
 	
 	@Update("update address set is_valid = 0 WHERE id=#{aid} AND is_valid=1")
-	public void deleteAddressDefault(int aid);
+	public void deleteAddress(int aid);
+	
+	@Select("SELECT * FROM pf_province order by province_id")
+	public List<PfProvince> getPfProvinces();
+	
+	@Select("SELECT * FROM pf_city where province_id = #{province_id} order by city_id")
+	public List<PfCity> getPfCities(int province_id);
+	
+	@Select("SELECT * FROM pf_area where city_id = #{city_id} order by area_id")
+	public List<PfArea> getPfareas(int city_id);
 	
 }

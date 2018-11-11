@@ -49,6 +49,7 @@ public class CouponAdminController {
 	public Response addCoupon(@RequestParam(value = "name", required = true) String name,
 			@RequestParam(value = "description", required = true) String description,
 			@RequestParam(value = "coupon_type", required = true) int couponType,
+			@RequestParam(value = "universal", required = true) boolean universal,
 			@RequestParam(value = "product_ids", required = true) String productIds,
 			@RequestParam(value = "cut_money", required = true) BigDecimal cutMoney,
 			@RequestParam(value = "discount_rate", required = true) float discountRate,
@@ -70,6 +71,7 @@ public class CouponAdminController {
 		c.setName(name);
 		c.setDescription(description);
 		c.setCouponType(couponType);
+		c.setUniversal(universal);
 		c.setCutMoney(cutMoney);
 		c.setDiscountRate(discountRate);
 		c.setMinCost(minCost);
@@ -85,23 +87,26 @@ public class CouponAdminController {
 		
 		int couponId = couponService.insert(c);
 		
-		String[] pidStrs = productIds.split(",");
-		int pid;
-		Product p = null;
-		CouponProduct cp = null;
-		List<CouponProduct> cpList = new ArrayList<CouponProduct>();
-		for(String pidStr : pidStrs) {
-			pid = Integer.parseInt(pidStr); 
-			p = productService.getById(pid);
-			if(p!=null) {
-				cp = new CouponProduct();
-				cp.setCouponId(couponId);
-				cp.setProductId(pid);
-				cpList.add(cp);
+		if(!universal) {
+			String[] pidStrs = productIds.split(",");
+			int pid;
+			Product p = null;
+			CouponProduct cp = null;
+			List<CouponProduct> cpList = new ArrayList<CouponProduct>();
+			for(String pidStr : pidStrs) {
+				pid = Integer.parseInt(pidStr); 
+				p = productService.getById(pid);
+				if(p!=null) {
+					cp = new CouponProduct();
+					cp.setCouponId(couponId);
+					cp.setProductId(pid);
+					cpList.add(cp);
+				}
 			}
-		}
-		if(!cpList.isEmpty()) {
-			couponService.insertCouponProducts(cpList);
+			
+			if(!cpList.isEmpty()) {
+				couponService.insertCouponProducts(cpList);
+			}
 		}
 		
 		CouponCode cc = null;
@@ -133,6 +138,7 @@ public class CouponAdminController {
 			@RequestParam(value = "description", required = true) String description,
 			@RequestParam(value = "product_ids", required = true) String productIds,
 			@RequestParam(value = "coupon_type", required = true) int couponType,
+			@RequestParam(value = "universal", required = true) boolean universal,
 			@RequestParam(value = "cut_money", required = true) BigDecimal cutMoney,
 			@RequestParam(value = "discount_rate", required = true) float discountRate,
 			@RequestParam(value = "min_cost", required = true) BigDecimal minCost,
@@ -155,6 +161,7 @@ public class CouponAdminController {
 		c.setName(name);
 		c.setDescription(description);
 		c.setCouponType(couponType);
+		c.setUniversal(universal);
 		c.setCutMoney(cutMoney);
 		c.setDiscountRate(discountRate);
 		c.setMinCost(minCost);
@@ -173,24 +180,27 @@ public class CouponAdminController {
 		//先删除关联的商品
 		couponService.deleteCouponProducts(c.getId());
 		
-		String[] pidStrs = productIds.split(",");
-		int pid;
-		Product p = null;
-		CouponProduct cp = null;
-		List<CouponProduct> cpList = new ArrayList<CouponProduct>();
-		for(String pidStr : pidStrs) {
-			pid = Integer.parseInt(pidStr); 
-			p = productService.getById(pid);
-			if(p!=null) {
-				cp = new CouponProduct();
-				cp.setCouponId(c.getId());
-				cp.setProductId(pid);
-				cpList.add(cp);
+		if(!universal) {
+			String[] pidStrs = productIds.split(",");
+			int pid;
+			Product p = null;
+			CouponProduct cp = null;
+			List<CouponProduct> cpList = new ArrayList<CouponProduct>();
+			for(String pidStr : pidStrs) {
+				pid = Integer.parseInt(pidStr); 
+				p = productService.getById(pid);
+				if(p!=null) {
+					cp = new CouponProduct();
+					cp.setCouponId(c.getId());
+					cp.setProductId(pid);
+					cpList.add(cp);
+				}
+			}
+			if(!cpList.isEmpty()) {
+				couponService.insertCouponProducts(cpList);
 			}
 		}
-		if(!cpList.isEmpty()) {
-			couponService.insertCouponProducts(cpList);
-		}
+		
 		return Response.ofSuccess();
 	}
 	

@@ -2,7 +2,12 @@ package com.lp.f2000.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+
+import com.lp.f2000.entity.Address;
 import com.lp.f2000.entity.CartProduct;
+import com.lp.f2000.entity.PfProvince;
 import com.lp.f2000.entity.User;
 
 public interface UserService {
@@ -32,17 +37,23 @@ public interface UserService {
 	public void updateCartProductNum(int cpid, int num);
 	
 	
-	/*
-	 * 添加收货地址
-	 */
+	public int insertAddress(Address address);
 	
-	/*
-	 * 删除收货地址
-	 */
+	public void updateAddress(Address address);
 	
-	/*
-	 * 收货地址列表
-	 */
+	public List<Address> getAddressesByuid(int uid);
+	
+	public Address getDefaultAddressByuid(int uid);
+	
+	public Address getAddressByid(int id);
+	
+	public void setAddressDefault(int aid);
+	
+	public void cancelAddressesDefaultByUid(int uid);
+	
+	public void deleteAddress(int aid);
+	
+	public List<PfProvince> getPfProvincesAll();
 	
 	
 	/*
