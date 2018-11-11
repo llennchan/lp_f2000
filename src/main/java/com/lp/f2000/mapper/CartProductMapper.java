@@ -27,4 +27,7 @@ public interface CartProductMapper {
 	@Update("update cart_product set is_valid = 0  WHERE id=#{id}")
 	public void deleteCartProduct(@Param("id") int id);
 	
+	@Update("update cart_product set num = #{num}  WHERE id=#{id}")
+	public void updateCartProductNum(int id, int num);
+	
 }

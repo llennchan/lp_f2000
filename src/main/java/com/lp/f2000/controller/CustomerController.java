@@ -107,6 +107,47 @@ public class CustomerController {
 	
 	
 	/*
+	 * 更新购物商品数量
+	 */
+	
+	/*
+	 * 删除购物车商品
+	 */
+	@PostMapping(value = "update_cart_product_num")
+	public Response updateCartProductNum(@RequestParam(value = "cart_product_id", required = true) int cartProductId,
+			@RequestParam(value = "num", required = true) int num,
+			HttpServletRequest request
+	) {
+		User user = (User) request.getSession().getAttribute("current_user");
+		if(user == null) {
+			return Response.ofParamError("请先登录");
+		}
+		
+		if(num < 0) {
+			return Response.ofParamError("商品数量错误");
+		}
+		
+		CartProduct cartProduct = userService.getCartProductById(cartProductId);
+		if(cartProduct==null || cartProduct.getUserId()!=user.getId()) {
+			return Response.ofParamError("购物车商品不存在");
+		}
+		
+		Sku sku = productService.getSkuById(cartProduct.getSkuId());
+		if(sku==null) {
+			return Response.ofParamError("sku不存在");
+		}
+		//判断是否有库存
+		int porderSkuSum = orderService.getPorderSkuSum(cartProduct.getSkuId());
+		if (sku.getNum() < (porderSkuSum + num)) {
+			return Response.ofParamError("商品库存不足");
+		}
+		
+		userService.updateCartProductNum(cartProductId, num);
+		return Response.ofSuccess();
+	}
+	
+	
+	/*
 	 * 下单
 	 */
 	
@@ -118,6 +159,7 @@ public class CustomerController {
 	/*
 	 * 取消订单
 	 */
+	
 	
 	
 	/*

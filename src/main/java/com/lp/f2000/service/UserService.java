@@ -29,6 +29,8 @@ public interface UserService {
 	 */
 	public List<CartProduct> ListCartProducts(int uid);
 	
+	public void updateCartProductNum(int cpid, int num);
+	
 	
 	/*
 	 * 添加收货地址

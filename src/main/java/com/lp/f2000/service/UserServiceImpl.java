@@ -58,6 +58,9 @@ public class UserServiceImpl implements UserService {
 		return cartProductMapper.getCartProductsByUid(uid);
 	}
 	
-	
+	@Override
+	public void updateCartProductNum(int cpid, int num) {
+		cartProductMapper.updateCartProductNum(cpid, num);
+	}
 
 }
