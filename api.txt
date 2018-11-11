@@ -1,5 +1,5 @@
 
-==================================================================
+//==================================================================
 服务端代码github地址 https://github.com/ljyspot/lp_f2000
 
 /admin/* 需要先登录
@@ -11,7 +11,7 @@
 csrfToken 放在表单参数或者HTTP header里面
 csrfTime 放在表单参数或者HTTP header里面
 
-==================接口返回json说明=================================
+//==================接口返回json说明=================================
 {
     "status": 0,
     "message": "成功",
@@ -30,8 +30,10 @@ status = 0
 404; //资源不存在
 
 
+/**************************************************************/
+//=================ADMIN 管理后台API===============================
+/**************************************************************/
 
-=================ADMIN 管理后台API===============================
 接口host:  http://47.98.165.115:8080
 
 1、添加产品/admin/add_product  (POST)
@@ -137,3 +139,78 @@ coupon_id=xxx
 
 17、所有优惠券列表（GET）
 /admin/coupons
+
+//=================ADMIN 管理后台API END===============================
+
+
+/**************************************************************/
+//=================前台台API===============================
+//POST方法同样需要添加csrfToken与csrfTime参数
+//另外所有/custom/*接口需要先登录
+/**************************************************************/
+
+1、首页商品列表接口 (GET)
+/home/products
+
+2、首页商品详情接口 (GET)
+/home/product?product_id=1
+sku里面rest_num表示剩余库存量
+
+3、/account/login （GET、POST）前端登录接口（会重定向到微信服务器认证）
+4、/account/wx_login (前端无需调用， 是微信服务器登录成功的回调接口， 需要配置在微信公众号后台)
+5、/account/test_login（测试用户登录接口，会按一个默认测试账号登录）
+
+6、添加商品到购物车接口(POST)
+/custom/add_cart_product
+sku_id  商品sku id
+num 数量
+
+7、删除购物车商品(POST)
+/custom/delete_cart_product
+cart_product_id 购物车商品记录id
+
+8、查看购物车列表(GET)
+/custom/cart_products
+
+
+9、更新购物商品数量(POST)
+/custom/update_cart_product_num
+cart_product_id 购物车商品记录id
+num 数量（不能为0也不能大于商品sku剩余库存量）
+
+10、返回所有省市区code信息
+/custom/all_areas
+
+11、添加收货地址 （POST）
+/custom/add_address
+rec_province 省份名称
+rec_city 城市名称
+rec_area 县市区名称
+rec_address 详细地址
+contact_name 联系人姓名
+contact_phone 电话
+
+12、更新收货地址（POST）
+/custom/update_address
+id 地址的id
+rec_province 省份code
+rec_city 城市code
+rec_area 县市区code
+rec_address 详细地址
+contact_name 联系人姓名
+contact_phone 电话
+
+13、当前用户的收货地址列表（GET)
+/custom/addresses
+
+14、获取当前用户默认收货地址（GET)
+/custom/default_address
+
+15、设置当前地址为默认收货地址(POST)
+/custom/set_default_address
+id 地址的id
+
+
+16、删除收货地址(POST)
+/custom/delete_address
+id 地址的id
