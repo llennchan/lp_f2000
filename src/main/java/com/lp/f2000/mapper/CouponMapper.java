@@ -35,6 +35,12 @@ public interface CouponMapper {
 	@Update("UPDATE coupon SET is_valid = 0  WHERE id=#{id} ")
 	public void deleteCoupon(int id);
 	
+	@Update("UPDATE coupon SET can_use = 1  WHERE id=#{id} ")
+	public void setCouponCanUse(int id);
+	
+	@Update("UPDATE coupon SET can_use = 0  WHERE id=#{id} ")
+	public void cancelCouponCanUse(int id);
+	
 	@Insert("INSERT INTO coupon_code(code, coupon_id) "
 			+ "VALUES(#{code}, #{couponId})")
 	@Options(useGeneratedKeys = true, keyProperty = "id")

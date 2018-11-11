@@ -141,6 +141,14 @@ coupon_id=xxx
 17、所有优惠券列表（GET）
 /admin/coupons
 
+18、设置优惠券可用(POST)
+/admin/set_coupon_can_use
+coupon_id
+
+19、设置优惠券不可用(POST)
+/admin/cancel_coupon_can_use
+coupon_id
+
 //=================ADMIN 管理后台API END===============================
 
 

@@ -10,6 +10,7 @@ public class Coupon {
 	private String description;
 	private int couponType;
 	private boolean universal;
+	private boolean canUse;
 	private BigDecimal cutMoney;
 	private float discountRate;
 	private BigDecimal minCost;
@@ -47,6 +48,12 @@ public class Coupon {
 	}
 	public void setCouponType(int couponType) {
 		this.couponType = couponType;
+	}
+	public boolean isCanUse() {
+		return canUse;
+	}
+	public void setCanUse(boolean canUse) {
+		this.canUse = canUse;
 	}
 	public boolean isUniversal() {
 		return universal;

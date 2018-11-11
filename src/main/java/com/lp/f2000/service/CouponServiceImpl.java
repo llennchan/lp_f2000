@@ -84,5 +84,15 @@ public class CouponServiceImpl implements CouponService {
 	public List<CouponProduct> ListCouponProductsByCid(int cid){
 		return couponMapper.ListCouponProductsByCid(cid);
 	}
+	
+	@Override
+	public void setCouponCanUse(int cid) {
+	    couponMapper.setCouponCanUse(cid);
+	}
+	
+	@Override
+	public void cancelCouponCanUse(int cid) {
+		couponMapper.cancelCouponCanUse(cid);
+	}
 
 }

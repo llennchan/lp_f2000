@@ -212,7 +212,16 @@ public class CouponAdminController {
 		return Response.ofSuccess();
 	}
 	
+	@PostMapping(value = "set_coupon_can_use")
+	public Response setCouponCanUse(@RequestParam(value = "coupon_id") int coupon_id) {
+		couponService.setCouponCanUse(coupon_id);
+		return Response.ofSuccess();
+	}
 
-
+	@PostMapping(value = "cancel_coupon_can_use")
+	public Response cancelCouponCanUse(@RequestParam(value = "coupon_id") int coupon_id) {
+		couponService.cancelCouponCanUse(coupon_id);
+		return Response.ofSuccess();
+	}
 	
 }
