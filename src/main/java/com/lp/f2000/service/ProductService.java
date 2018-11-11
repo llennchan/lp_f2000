@@ -25,6 +25,8 @@ public interface ProductService {
 	
 	public void downProduct(Product product);
 	
+	public Sku getSkuById(int skuid);
+	
 	public void saveSku(Sku sku);
 	
 	public List<Sku> listProductSkus(int product_id);

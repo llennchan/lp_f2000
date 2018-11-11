@@ -14,6 +14,8 @@ public class Sku {
 	private Timestamp createTime;
 	private Timestamp updateTime;
 	
+	private int restNum;
+	
 	public Sku() {
 		super();
 	}
@@ -88,6 +90,14 @@ public class Sku {
 	}
 	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public int getRestNum() {
+		return restNum;
+	}
+
+	public void setRestNum(int restNum) {
+		this.restNum = restNum;
 	}
 	
 	

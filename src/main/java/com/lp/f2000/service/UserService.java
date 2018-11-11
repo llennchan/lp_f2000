@@ -15,6 +15,9 @@ public interface UserService {
 	 */
 	public int addCartProduct(CartProduct cartProduct);
 	
+	//查询购物车商品
+	public CartProduct getCartProductById(int cartProductId);
+	
 	/*
 	 * 删除购物车商品
 	 */

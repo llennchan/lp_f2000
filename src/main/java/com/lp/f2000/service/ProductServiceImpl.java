@@ -94,6 +94,11 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
+	public Sku getSkuById(int skuid) {
+		return productMapper.getSkuById(skuid);
+	}
+	
+	@Override
 	public List<Sku> listProductSkus(int product_id){
 		return productMapper.listProductSkus(product_id);
 	}

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.lp.f2000.entity.CartProduct;
 import com.lp.f2000.entity.User;
+import com.lp.f2000.mapper.CartProductMapper;
 import com.lp.f2000.mapper.UserMapper;
 
 @Service
@@ -15,6 +16,8 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserMapper userMapper;
 	
+	@Autowired
+	private CartProductMapper cartProductMapper;
 	
 	@Override
 	public User getById(int id) {
@@ -35,19 +38,24 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int addCartProduct(CartProduct cartProduct) {
 		// TODO Auto-generated method stub
-		return 0;
+		return cartProductMapper.insertCartProduct(cartProduct);
+	}
+	
+	@Override
+	public CartProduct getCartProductById(int cartProductId) {
+		return cartProductMapper.getCartProductById(cartProductId);
 	}
 
 	@Override
 	public void deleteCartProduct(int cpid) {
 		// TODO Auto-generated method stub
-		
+		cartProductMapper.deleteCartProduct(cpid);
 	}
 
 	@Override
 	public List<CartProduct> ListCartProducts(int uid) {
 		// TODO Auto-generated method stub
-		return null;
+		return cartProductMapper.getCartProductsByUid(uid);
 	}
 	
 	

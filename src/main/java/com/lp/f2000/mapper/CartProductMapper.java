@@ -16,7 +16,7 @@ public interface CartProductMapper {
 	@Select("SELECT * FROM cart_product WHERE id=#{id} AND is_valid=1")
 	public CartProduct getCartProductById(@Param("id") int id);
 	
-	@Select("SELECT * FROM cart_product WHERE user_id=#{uid} AND is_valid=1")
+	@Select("SELECT * FROM cart_product WHERE user_id=#{uid} AND is_valid=1 order by id desc")
 	public List<CartProduct> getCartProductsByUid(@Param("uid") int uid);
 	
 	@Insert("INSERT INTO cart_product(user_id, product_id, sku_id, num) "

@@ -75,4 +75,7 @@ public interface ProductMapper {
 	@Update("UPDATE sku SET is_valid = 0  WHERE id=#{id}")
 	public void deleteSku(int id);
 	
+	@Select("SELECT * FROM sku WHERE id = #{skuid} and is_valid=1 ")
+	public Sku getSkuById(int skuid);
+	
 }

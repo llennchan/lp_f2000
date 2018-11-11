@@ -13,6 +13,7 @@ import com.lp.f2000.constant.Constant;
 import com.lp.f2000.entity.Product;
 import com.lp.f2000.entity.Sku;
 import com.lp.f2000.service.ImageService;
+import com.lp.f2000.service.OrderService;
 import com.lp.f2000.service.ProductService;
 
 @RestController
@@ -20,6 +21,8 @@ import com.lp.f2000.service.ProductService;
 public class HomeController {
 	@Autowired
 	private ProductService productService;
+	@Autowired
+	private OrderService orderService;
 	@Autowired
 	private ImageService imageService;
 
@@ -40,6 +43,17 @@ public class HomeController {
 		p.setThumbImages(imageService.getImagesByType(p.getId(), Constant.IMAGE_PRODUCT_THUMB));
 		p.setDetailImages(imageService.getImagesByType(p.getId(), Constant.IMAGE_PRODUCT_DETAIL));
 		List<Sku> skus = productService.listProductSkus(p.getId());
+		//每个sku查询库存量
+		int restNum = 0;
+		int porderSkuSum = 0;
+		for(Sku sku : skus) {
+			porderSkuSum = orderService.getPorderSkuSum(sku.getId());
+			restNum = sku.getNum() - porderSkuSum;
+			if(restNum < 0) {
+				restNum = 0;
+			}
+			sku.setRestNum(restNum);
+		}
 		p.setSkus(skus);
 		return Response.ofSuccess(p);
 	}

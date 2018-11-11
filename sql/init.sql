@@ -162,6 +162,7 @@ create table product_order
     pay_order_id INT(11) NOT NULL DEFAULT 0 COMMENT '支付订单id',
 	user_id INT(11) NOT NULL DEFAULT 0 COMMENT '用户id',
 	sku_id INT(11) NOT NULL DEFAULT 0 COMMENT 'sku id',
+	num INT(11) NOT NULL DEFAULT 0 COMMENT '购买量',
 	price DECIMAL(18,2) COMMENT '价格',	
 	status TINYINT(4) DEFAULT 0 COMMENT '状态',
 	logistics_status TINYINT(4) DEFAULT 0 COMMENT '物流状态',
