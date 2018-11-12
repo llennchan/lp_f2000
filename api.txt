@@ -155,7 +155,7 @@ coupon_id
 /**************************************************************/
 //=================前台台API===============================
 //POST方法同样需要添加csrfToken与csrfTime参数
-//另外所有/custom/*接口需要先登录
+//另外所有/customer/*接口需要先登录
 /**************************************************************/
 
 1、首页商品列表接口 (GET)
@@ -170,28 +170,28 @@ sku里面rest_num表示剩余库存量
 5、/account/test_login（测试用户登录接口，会按一个默认测试账号登录）
 
 6、添加商品到购物车接口(POST)
-/custom/add_cart_product
+/customer/add_cart_product
 sku_id  商品sku id
 num 数量
 
 7、删除购物车商品(POST)
-/custom/delete_cart_product
+/customer/delete_cart_product
 cart_product_id 购物车商品记录id
 
 8、查看购物车列表(GET)
-/custom/cart_products
+/customer/cart_products
 
 
 9、更新购物商品数量(POST)
-/custom/update_cart_product_num
+/customer/update_cart_product_num
 cart_product_id 购物车商品记录id
 num 数量（不能为0也不能大于商品sku剩余库存量）
 
 10、返回所有省市区code信息
-/custom/all_areas
+/customer/all_areas
 
 11、添加收货地址 （POST）
-/custom/add_address
+/customer/add_address
 rec_province 省份名称
 rec_city 城市名称
 rec_area 县市区名称
@@ -200,7 +200,7 @@ contact_name 联系人姓名
 contact_phone 电话
 
 12、更新收货地址（POST）
-/custom/update_address
+/customer/update_address
 id 地址的id
 rec_province 省份code
 rec_city 城市code
@@ -210,16 +210,16 @@ contact_name 联系人姓名
 contact_phone 电话
 
 13、当前用户的收货地址列表（GET)
-/custom/addresses
+/customer/addresses
 
 14、获取当前用户默认收货地址（GET)
-/custom/default_address
+/customer/default_address
 
 15、设置当前地址为默认收货地址(POST)
-/custom/set_default_address
+/customer/set_default_address
 id 地址的id
 
 
 16、删除收货地址(POST)
-/custom/delete_address
+/customer/delete_address
 id 地址的id
