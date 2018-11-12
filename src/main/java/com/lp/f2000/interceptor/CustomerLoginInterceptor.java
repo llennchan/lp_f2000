@@ -9,7 +9,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 /**
  * 登录拦截器
  */
-public class CustomLoginInterceptor extends HandlerInterceptorAdapter {
+public class CustomerLoginInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -19,7 +19,7 @@ public class CustomLoginInterceptor extends HandlerInterceptorAdapter {
         	return  true;
         }
         response.setContentType("application/json");
-    	response.getWriter().write("{status:-1, message:'please login custom account via weixin app'}");
+    	response.getWriter().write("{status:-1, message:'please login customer account via weixin app'}");
         return  false;
         
     }

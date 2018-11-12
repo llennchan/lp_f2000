@@ -1,5 +1,6 @@
 package com.lp.f2000.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +24,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/account")
 public class WxController {
+	@Autowired
 	private UserService userService;
 	
     @Value("${wx.appId}")
