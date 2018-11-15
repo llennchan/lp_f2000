@@ -27,19 +27,19 @@ public interface CouponMapper {
 	public List<Coupon> listCoupons();
 	
 	@Select("SELECT * FROM coupon WHERE is_valid=1 order by id desc ")
-	public List<Coupon> listCouponsByPid(int pid);
+	public List<Coupon> listCouponsByPid(@Param("id") int pid);
 	
 	@Select("SELECT * FROM coupon WHERE id=#{id} AND is_valid=1")
 	public Coupon getCouponById(@Param("id") int id);
 	
 	@Update("UPDATE coupon SET is_valid = 0  WHERE id=#{id} ")
-	public void deleteCoupon(int id);
+	public void deleteCoupon(@Param("id") int id);
 	
 	@Update("UPDATE coupon SET can_use = 1  WHERE id=#{id} ")
-	public void setCouponCanUse(int id);
+	public void setCouponCanUse(@Param("id") int id);
 	
 	@Update("UPDATE coupon SET can_use = 0  WHERE id=#{id} ")
-	public void cancelCouponCanUse(int id);
+	public void cancelCouponCanUse(@Param("id") int id);
 	
 	@Insert("INSERT INTO coupon_code(code, coupon_id) "
 			+ "VALUES(#{code}, #{couponId})")
@@ -56,12 +56,12 @@ public interface CouponMapper {
 	public void insertCouponProducts(@Param("list") List<CouponProduct> couponProducts);
     
 	@Update("UPDATE coupon_code SET is_valid = 0  WHERE coupon_id=#{cid} ")
-	public void deleteCouponCodes(int cid);
+	public void deleteCouponCodes(@Param("cid") int cid);
     
 	@Update("UPDATE coupon_product SET is_valid = 0  WHERE coupon_id=#{cid} ")
-	public void deleteCouponProducts(int cid);
+	public void deleteCouponProducts(@Param("cid") int cid);
 	
 	@Select("SELECT * FROM coupon_product WHERE coupon_id=#{cid} AND is_valid=1")
-	public List<CouponProduct> ListCouponProductsByCid(int cid);
+	public List<CouponProduct> ListCouponProductsByCid(@Param("cid") int cid);
 
 }

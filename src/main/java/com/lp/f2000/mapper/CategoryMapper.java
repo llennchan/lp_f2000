@@ -22,12 +22,12 @@ public interface CategoryMapper {
 	public void updateCategory(Category cat);
 	
 	@Select("SELECT * FROM category WHERE parent_id = #{pid} and is_valid=1 ")
-	public List<Category> listCategoriesByPid(int pid);
+	public List<Category> listCategoriesByPid(@Param("id") int pid);
 	
 	@Select("SELECT * FROM category WHERE id=#{id} AND is_valid=1")
 	public Category getCategoryById(@Param("id") int id);
 	
 	@Update("UPDATE category SET is_valid = 0  WHERE id=#{id} ")
-	public void deleteCategory(int id);
+	public void deleteCategory(@Param("id") int id);
 
 }

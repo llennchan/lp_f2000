@@ -28,6 +28,6 @@ public interface CartProductMapper {
 	public void deleteCartProduct(@Param("id") int id);
 	
 	@Update("update cart_product set num = #{num}  WHERE id=#{id}")
-	public void updateCartProductNum(int id, int num);
+	public void updateCartProductNum(@Param("id")int id, @Param("num")int num);
 	
 }

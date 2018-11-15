@@ -22,7 +22,9 @@ public class ImageServiceImpl implements ImageService {
 	@Override
 	public List<Image> getImagesByType(int rid, int rtype) {
 		// TODO Auto-generated method stub
-		return imageMapper.getImagesByType(rid, rtype);
+		System.out.println("===================" + rid +  ":" + rtype);
+		List<Image> rs = imageMapper.getImagesByType(rid, rtype);
+		return rs;
 	}
 
 	

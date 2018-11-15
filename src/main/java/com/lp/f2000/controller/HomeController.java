@@ -36,8 +36,11 @@ public class HomeController {
 	}
 	
 	@GetMapping(value = "product")
-	public Response<Product> product(@RequestParam("product_id") int productId) {
+	public Response<Object> product(@RequestParam("product_id") int productId) {
 		Product p = productService.getById(productId);
+		if(p==null) {
+			return Response.ofParamError("商品不存在或已被删除");
+		}
 		p.setBroadcastImages(imageService.getImagesByType(p.getId(), Constant.IMAGE_PRODUCT_BROADCAST));
 		p.setSmallImages(imageService.getImagesByType(p.getId(), Constant.IMAGE_PRODUCT_SMALL));
 		p.setThumbImages(imageService.getImagesByType(p.getId(), Constant.IMAGE_PRODUCT_THUMB));

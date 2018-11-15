@@ -40,20 +40,20 @@ public interface ProductMapper {
 	public void deleteProduct(int id);
 	
 	@Update("UPDATE product SET position = position + 1  WHERE position > #{deleted_pos} and is_valid=1")
-	public void resetDeleteProductPos(int deleted_pos);	
+	public void resetDeleteProductPos(@Param("deleted_pos") int deleted_pos);	
 	
 	@Insert("INSERT INTO categorize(resource_id, resource_type, category_id) "
 			+ "VALUES(#{rid}, #{rtype}, #{cid})")
 	@Options(useGeneratedKeys = true, keyProperty = "id")
-	public void insertProductCat(int rid, int rtype, int cid);	
+	public void insertProductCat(@Param("rid") int rid, @Param("rtype") int rtype, @Param("cid") int cid);	
 	
 	@Select("SELECT cat.* "
 			+ "FROM category AS cat, categorize as catize  "
 			+ "WHERE cat.id = catize.category_id AND catize.resource_id = #{rid} AND catize.resource_type = #{rtype} ")
-	public List<Category> listProductCats(int rid, int rtype);
+	public List<Category> listProductCats(@Param("rid") int rid, @Param("rtype") int rtype);
 	
 	@Delete("DELETE FROM categorize WHERE resource_id=#{pid} and resource_type = #{rtype} and category_id = #{cid} ")
-	public void deleteProductCat(int rid, int rtype, int cid);
+	public void deleteProductCat(@Param("rid") int rid, @Param("rtype") int rtype, @Param("cid") int cid);
 	
 	@Update("UPDATE product SET status = #{status}, update_time = #{updateTime}  WHERE id = #{id}")
 	public void updateProductStatus(int id, int status, Timestamp updateTime);
@@ -70,12 +70,12 @@ public interface ProductMapper {
 	public void updateSku(Sku sku);
 	
 	@Select("SELECT * FROM sku WHERE product_id = #{product_id} and is_valid = 1")
-	public List<Sku> listProductSkus(int product_id);
+	public List<Sku> listProductSkus(@Param("product_id")int product_id);
 	
 	@Update("UPDATE sku SET is_valid = 0  WHERE id=#{id}")
 	public void deleteSku(int id);
 	
 	@Select("SELECT * FROM sku WHERE id = #{skuid} and is_valid=1 ")
-	public Sku getSkuById(int skuid);
+	public Sku getSkuById(@Param("skuid")int skuid);
 	
 }
