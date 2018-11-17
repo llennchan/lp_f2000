@@ -149,6 +149,10 @@ coupon_id
 /admin/cancel_coupon_can_use
 coupon_id
 
+20、创建优惠券兑换码(POST)
+/admin/create_coupon_codes
+id=1
+num=5
 //=================ADMIN 管理后台API END===============================
 
 

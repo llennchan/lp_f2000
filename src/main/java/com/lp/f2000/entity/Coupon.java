@@ -29,6 +29,14 @@ public class Coupon {
 	private Timestamp createTime;
 	private Timestamp updateTime;
 	
+	private int codeNum;
+	
+	public int getCodeNum() {
+		return codeNum;
+	}
+	public void setCodeNum(int codeNum) {
+		this.codeNum = codeNum;
+	}
 	private List<CouponProduct> couponProducts;
 	
 	public int getId() {

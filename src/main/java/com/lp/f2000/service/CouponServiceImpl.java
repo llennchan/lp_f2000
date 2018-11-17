@@ -54,6 +54,7 @@ public class CouponServiceImpl implements CouponService {
 		for(Coupon cp : coupons) {
 			couponProducts = couponMapper.ListCouponProductsByCid(cp.getId());
 			cp.setCouponProducts(couponProducts);
+			cp.setCodeNum(couponMapper.countCouponCodes(cp.getId()));
 		}
 		return coupons;
 	}
@@ -78,6 +79,11 @@ public class CouponServiceImpl implements CouponService {
 	@Override
 	public void deleteCouponCodes(int cid) {
 		couponMapper.deleteCouponCodes(cid);
+	}
+	
+	@Override
+	public int countCouponCodes(int cid) {
+		return couponMapper.countCouponCodes(cid);
 	}
 	
 	@Override

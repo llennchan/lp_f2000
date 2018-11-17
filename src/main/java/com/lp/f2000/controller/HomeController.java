@@ -29,8 +29,15 @@ public class HomeController {
 	@GetMapping(value = "products")
 	public Response<List<Product>> products() {
 		List<Product> ps = productService.listProducts();
+		List<Sku> skus = null;
 		for(Product p : ps) {
+			p.setBroadcastImages(imageService.getImagesByType(p.getId(), Constant.IMAGE_PRODUCT_BROADCAST));
+			p.setSmallImages(imageService.getImagesByType(p.getId(), Constant.IMAGE_PRODUCT_SMALL));
 			p.setThumbImages(imageService.getImagesByType(p.getId(), Constant.IMAGE_PRODUCT_THUMB));
+			p.setDetailImages(imageService.getImagesByType(p.getId(), Constant.IMAGE_PRODUCT_DETAIL));
+			
+			skus = productService.listProductSkus(p.getId());
+			p.setSkus(skus);
 		}
 		return Response.ofSuccess(ps);
 	}

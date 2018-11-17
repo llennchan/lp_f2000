@@ -64,8 +64,8 @@ public class CouponAdminController {
 			@RequestParam(value = "person_limit_num", required = true) int personLimitNum,
 			@RequestParam(value = "person_day_limit_num", required = true) int personDayLimitNum
 	) {
-		if(num > 10000) {
-			return Response.ofParamError("优惠券库存量超过上限10000");
+		if(num > 100000) {
+			return Response.ofParamError("优惠券库存量超过上限100000");
 		}
 		Coupon c = new Coupon();
 		c.setName(name);
@@ -109,6 +109,23 @@ public class CouponAdminController {
 			}
 		}
 		
+		return Response.ofSuccess();
+	}
+	
+	@PostMapping(value = "create_coupon_codes")
+	public Response<Object> createCouponCodes(@RequestParam(value = "id", required = true) int id,
+			@RequestParam(value = "num", required = true) int num) {
+		Coupon c = couponService.getById(id);
+		if(c==null) {
+			return Response.ofParamError("优惠券不存在或已被删除");
+		}
+		int total = c.getNum();
+		
+		int codeNum = couponService.countCouponCodes(c.getId());
+		if(codeNum + num > total) {
+			return Response.ofParamError("生成数量超过库存,还可生成" + (total-codeNum));
+		}
+		
 		CouponCode cc = null;
 		HashSet<String> set = new HashSet<String>();
 		StringUtil.randomCodeSet(num, set);
@@ -116,7 +133,7 @@ public class CouponAdminController {
         for (String code : set) {  
         	cc = new CouponCode();
  		    cc.setCode(code);
- 		    cc.setCouponId(couponId);
+ 		    cc.setCouponId(c.getId());
  		    ccList.add(cc);
  		    if(ccList.size()>500) {
  			   couponService.insertCouponCodes(ccList);
@@ -128,8 +145,7 @@ public class CouponAdminController {
 			  ccList.clear();
 			  ccList = null;
 		}
-		
-		return Response.ofSuccess();
+		return Response.ofSuccess(set);
 	}
 	
 	@PostMapping(value = "update_coupon")

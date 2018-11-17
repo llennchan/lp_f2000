@@ -2,6 +2,8 @@ package com.lp.f2000.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.lp.f2000.entity.Coupon;
 import com.lp.f2000.entity.CouponCode;
 import com.lp.f2000.entity.CouponProduct;
@@ -26,6 +28,7 @@ public interface CouponService {
 	
 	public void deleteCouponProducts(int cid);
 	public void deleteCouponCodes(int cid);
+	public int countCouponCodes(int cid);
 	
 	public List<CouponProduct> ListCouponProductsByCid(int cid);
 	
