@@ -1,6 +1,8 @@
 package com.lp.f2000.controller.admin;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -23,6 +25,8 @@ import com.lp.f2000.entity.Product;
 import com.lp.f2000.entity.Sku;
 import com.lp.f2000.service.ImageService;
 import com.lp.f2000.service.ProductService;
+import com.lp.f2000.util.AliOSSUtil;
+import com.lp.f2000.util.FileUtil;
 import com.lp.f2000.util.StringUtil;
 
 @RestController
@@ -247,10 +251,58 @@ public class ProductAdminController {
      * @throws IOException
      */
     @PostMapping("/upload_img")
-    public String uploadImgQiniu(@RequestParam("editormd-image-file") MultipartFile multipartFile) throws IOException {
-        FileInputStream inputStream = (FileInputStream) multipartFile.getInputStream();
-        String path = qiniuUtil.uploadImg(inputStream, StringUtil.randomUUID());
-        return path;
+    public Response uploadImg(@RequestParam("image-file") MultipartFile file) throws IOException {
+        if (!file.isEmpty()) {
+            
+            String filename = file.getOriginalFilename();
+            String format = filename.substring(filename.lastIndexOf(".")+1, filename.length());
+            if(format==null || format.trim().equals("")) {
+            	return Response.ofParamError("上传文件格式为空");
+            }
+            
+            format = format.toLowerCase();
+            
+            if (!(format.trim().equals("png") || format.trim().equals("jpg") || format.trim().equals("jpeg") || format.trim().equals("gif"))) {
+            	return Response.ofParamError("上传文件格式只能为png jpg gif");
+            }
+            
+            if(file.getSize() > 1000 * 1000) {
+            	return Response.ofParamError("上传文件不能大于1M");
+            }
+            
+            String uploadUrl = "";
+            try {
+
+                if (file!=null) {
+                    if (!"".equals(filename.trim())) {
+                    	filename = StringUtil.randomUUID().toLowerCase() + "." + format;
+                        File newFile = new File(filename);
+                        FileOutputStream os = new FileOutputStream(newFile);
+                        os.write(file.getBytes());
+                        os.close();
+                        file.transferTo(newFile);
+                        // 上传到OSS
+                        uploadUrl = AliOSSUtil.uploadLocalFile(newFile, "images/");
+                        
+                        System.out.println(newFile.getAbsolutePath());
+
+                        // 删除上传的文件
+                        File file1=new File("");
+                        String s = file1.getAbsolutePath();
+                        
+                        FileUtil.delete(s + "\\" + filename);
+                    }
+
+                }
+                return Response.ofSuccess(uploadUrl);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            
+            
+        }
+        
+        return Response.ofParamError("上传文件失败");
     }
     
     /*
