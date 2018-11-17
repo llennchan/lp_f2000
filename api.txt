@@ -73,7 +73,7 @@ id
 7、产品列表/admin/products  (GET)
 
 8、上传图片接口/admin/upload_img (POST) 返回图片地址
-editormd-image-file 图片文件input name
+image-file 图片文件input name
 
 9、产品上下架/admin/update_product_status  (POST)
 id
