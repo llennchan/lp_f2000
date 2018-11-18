@@ -284,14 +284,9 @@ public class ProductAdminController {
                         file.transferTo(newFile);
                         // 上传到OSS
                         uploadUrl = AliOSSUtil.uploadLocalFile(newFile, "images/");
-                        
-                        System.out.println(newFile.getAbsolutePath());
 
                         // 删除上传的文件
-                        File file1=new File("");
-                        String s = file1.getAbsolutePath();
-                        
-                        FileUtil.delete(s + "\\" + filename);
+                        FileUtil.delete(newFile.getAbsolutePath());
                     }
 
                 }
