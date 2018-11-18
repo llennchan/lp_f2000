@@ -81,8 +81,9 @@ public class ProductAdminController {
 		
 		int pcount = productService.countProducts();
 		p.setPosition(pcount+1);
+		productService.insert(p);
+		int pid = p.getId();
 		
-		int pid = productService.insert(p);
 		//插入图片
 		//1缩略图1  2轮播图 5 3商品小图1 4详情图10
 		if(images1!=null) {
@@ -102,7 +103,7 @@ public class ProductAdminController {
 		if(images2!=null) {
 			int pt_count = imageService.imageCountByType(pid, Constant.IMAGE_PRODUCT_BROADCAST);
 			if(pt_count<=5) {
-				String[] strs = images1.split(",");
+				String[] strs = images2.split(",");
 				for(String str : strs) {
 					Image image = new Image();
 					image.setPostUrl(str);
@@ -115,7 +116,7 @@ public class ProductAdminController {
 		if(images3!=null) {
 			int pt_count = imageService.imageCountByType(pid, Constant.IMAGE_PRODUCT_SMALL);
 			if(pt_count<=1) {
-				String[] strs = images1.split(",");
+				String[] strs = images3.split(",");
 				for(String str : strs) {
 					Image image = new Image();
 					image.setPostUrl(str);
@@ -128,7 +129,7 @@ public class ProductAdminController {
 		if(images4!=null) {
 			int pt_count = imageService.imageCountByType(pid, Constant.IMAGE_PRODUCT_DETAIL);
 			if(pt_count<=10) {
-				String[] strs = images1.split(",");
+				String[] strs = images4.split(",");
 				for(String str : strs) {
 					Image image = new Image();
 					image.setPostUrl(str);

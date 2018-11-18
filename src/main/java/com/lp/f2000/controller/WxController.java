@@ -73,8 +73,7 @@ public class WxController {
 			currentUser = new com.lp.f2000.entity.User();
 			currentUser.setWxOpenid(wxOpenid);
 			currentUser.setWxNicname(wxuser.getNickname());
-			int uid = userService.insertUser(currentUser);
-			currentUser.setId(uid);
+			userService.insertUser(currentUser);
 		}
 		
 		request.getSession().setAttribute("current_user", currentUser);
@@ -96,8 +95,7 @@ public class WxController {
 			currentUser = new com.lp.f2000.entity.User();
 			currentUser.setWxOpenid(test_wx_openid);
 			currentUser.setWxNicname(test_wx_nickname);
-			int uid = userService.insertUser(currentUser);
-			currentUser.setId(uid);
+			userService.insertUser(currentUser);
 		}
 		
 		//request.getSession().setAttribute("current_user", currentUser);

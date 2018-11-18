@@ -85,7 +85,8 @@ public class CouponAdminController {
 		c.setPersonLimitNum(personLimitNum);
 		c.setPersonDayLimitNum(personDayLimitNum);
 		
-		int couponId = couponService.insert(c);
+		couponService.insert(c);
+		int couponId = c.getId();
 		
 		if(!universal) {
 			String[] pidStrs = productIds.split(",");
