@@ -13,7 +13,8 @@ import com.lp.f2000.service.UserService;
 import weixin.popular.api.SnsAPI;
 import weixin.popular.bean.sns.SnsToken;
 import weixin.popular.bean.user.User;
- 
+
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -82,7 +83,7 @@ public class WxController {
      }
     
     @RequestMapping(value = "/test_login")
-    public Response<Object> testLogin(HttpServletRequest request) throws IOException {
+    public Response<Object> testLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
     	com.lp.f2000.entity.User rsUser = (com.lp.f2000.entity.User) request.getSession().getAttribute("current_user");
     	if(rsUser!=null && rsUser.getId() > 0) {
     		return Response.ofSuccess(rsUser);
@@ -99,9 +100,23 @@ public class WxController {
 			currentUser.setId(uid);
 		}
 		
-		request.getSession().setAttribute("current_user", currentUser);
+		//request.getSession().setAttribute("current_user", currentUser);
+		Cookie cookie = new Cookie("current_wx_openid", test_wx_openid); 
+		cookie.setHttpOnly(true);
+		cookie.setMaxAge(3600*10);
+		cookie.setPath("/");
+        response.addCookie(cookie);
 		
 		return Response.ofSuccess(currentUser);
+    }
+    
+    @RequestMapping(value = "/logout")
+    public void wxLogout(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Cookie killLoginCookie = new Cookie("current_wx_openid", null);
+        killLoginCookie.setMaxAge(0);
+        killLoginCookie.setPath("/");
+        response.addCookie(killLoginCookie);
+        request.getSession().setAttribute("current_user", null);
     }
     
 }
