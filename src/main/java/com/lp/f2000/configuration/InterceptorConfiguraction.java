@@ -20,8 +20,8 @@ public class InterceptorConfiguraction implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry){
         //registry.addInterceptor此方法添加拦截器
-    	//registry.addInterceptor(new CsrfInterceptor()).addPathPatterns("/**");
-        //registry.addInterceptor(new AdminLoginInterceptor()).addPathPatterns("/admin/*");
-       // registry.addInterceptor(customerLoginInterceptor()).addPathPatterns("/customer/*");
+    	registry.addInterceptor(new CsrfInterceptor()).addPathPatterns("/**");
+        registry.addInterceptor(new AdminLoginInterceptor()).addPathPatterns("/admin/*");
+        registry.addInterceptor(customerLoginInterceptor()).addPathPatterns("/customer/*");
     }
 }
