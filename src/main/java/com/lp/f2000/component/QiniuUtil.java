@@ -23,16 +23,12 @@ public class QiniuUtil{
  
     private static final Logger logger = LoggerFactory.getLogger(QiniuUtil.class);
  
-    @Value("${qiniu.accessKey}")
     private String accessKey;
  
-    @Value("${qiniu.secretKey}")
     private String secretKey;
  
-    @Value("${qiniu.bucket}")
     private String bucket;
  
-    @Value("${qiniu.path}")
     private String path;
  
     /**

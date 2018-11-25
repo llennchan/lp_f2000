@@ -25,7 +25,7 @@ import com.lp.f2000.entity.Product;
 import com.lp.f2000.entity.Sku;
 import com.lp.f2000.service.ImageService;
 import com.lp.f2000.service.ProductService;
-import com.lp.f2000.util.AliOSSUtil;
+import com.lp.f2000.component.AliOSSUtil;
 import com.lp.f2000.util.FileUtil;
 import com.lp.f2000.util.StringUtil;
 

@@ -11,7 +11,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.lp.f2000.entity.User;
 import com.lp.f2000.service.UserService;
-import com.lp.f2000.util.AESUtil;
+import com.lp.f2000.component.AESUtil;
 
 /**
  * 登录拦截器

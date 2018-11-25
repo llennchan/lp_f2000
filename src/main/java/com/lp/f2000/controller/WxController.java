@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lp.f2000.common.Response;
 import com.lp.f2000.service.CategoryService;
 import com.lp.f2000.service.UserService;
-import com.lp.f2000.util.AESUtil;
+import com.lp.f2000.component.AESUtil;
 
 import weixin.popular.api.SnsAPI;
 import weixin.popular.bean.sns.SnsToken;
