@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.lp.f2000.entity.User;
 import com.lp.f2000.service.UserService;
+import com.lp.f2000.util.AESUtil;
 
 /**
  * 登录拦截器
@@ -21,31 +23,16 @@ public class CustomerLoginInterceptor extends HandlerInterceptorAdapter {
 	
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-    	com.lp.f2000.entity.User rsUser = (com.lp.f2000.entity.User) request.getSession().getAttribute("current_user");
-        if (rsUser != null && rsUser.getId() > 0){
-        	return  true;
-        }
-    
-    	rsUser = null;
-        Cookie[] cookies = request.getCookies();
-        if(cookies!=null) {
-	        //验证cookies是否合法
-	        for (Cookie c : cookies){
-	            System.out.println(c.getName());
-	        	if (c.getName().equals("current_wx_openid")){
-	               String wx_openid = c.getValue();
-	               if(wx_openid!=null) {
-	            	   if(userService!=null) {
-	            		   rsUser = userService.getByWxOpenid(wx_openid);
-	            	   }
-	            	   
-	               }
-	               
-	            }
-	        }
-        }
-    	 
-    	//com.lp.f2000.entity.User rsUser = (com.lp.f2000.entity.User) request.getSession().getAttribute("current_user");
+    	String f2000AccessToken = request.getHeader("f2000AccessToken");
+    	User rsUser = null;
+    	
+    	if(f2000AccessToken!=null && !f2000AccessToken.trim().equals("")) {
+    		String wx_openid = AESUtil.check(f2000AccessToken);
+    		if(wx_openid!=null && !wx_openid.trim().equals("")) {
+    			rsUser = userService.getByWxOpenid(wx_openid);
+    		}
+    	}
+    	
         if (rsUser != null && rsUser.getId() > 0){
         	request.getSession().setAttribute("current_user", rsUser);
         	return  true;

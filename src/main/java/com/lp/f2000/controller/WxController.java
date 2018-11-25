@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lp.f2000.common.Response;
 import com.lp.f2000.service.CategoryService;
 import com.lp.f2000.service.UserService;
+import com.lp.f2000.util.AESUtil;
 
 import weixin.popular.api.SnsAPI;
 import weixin.popular.bean.sns.SnsToken;
@@ -76,9 +77,8 @@ public class WxController {
 			userService.insertUser(currentUser);
 		}
 		
-		request.getSession().setAttribute("current_user", currentUser);
-		
-		return Response.ofSuccess(currentUser);
+		String rscode = AESUtil.encode(wxOpenid);
+		return Response.ofSuccess(rscode);
      }
     
     @RequestMapping(value = "/test_login")
@@ -97,24 +97,9 @@ public class WxController {
 			currentUser.setWxNicname(test_wx_nickname);
 			userService.insertUser(currentUser);
 		}
-		
-		//request.getSession().setAttribute("current_user", currentUser);
-		Cookie cookie = new Cookie("current_wx_openid", test_wx_openid); 
-		cookie.setHttpOnly(true);
-		cookie.setMaxAge(3600*10);
-		cookie.setPath("/");
-        response.addCookie(cookie);
-		
-		return Response.ofSuccess(currentUser);
+		String rscode = AESUtil.encode(test_wx_openid);
+		return Response.ofSuccess(rscode);
     }
     
-    @RequestMapping(value = "/logout")
-    public void wxLogout(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Cookie killLoginCookie = new Cookie("current_wx_openid", null);
-        killLoginCookie.setMaxAge(0);
-        killLoginCookie.setPath("/");
-        response.addCookie(killLoginCookie);
-        request.getSession().setAttribute("current_user", null);
-    }
     
 }
