@@ -16,11 +16,20 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
+
 import com.alibaba.fastjson.JSON;
 
+
+@Component
+@PropertySource(value = "classpath:application.yml", ignoreResourceNotFound = true)
 public class AESUtil {
-	private static String securetKey = "dfg89tyurtb54674kljj234hgsaddfh&sdf$f#2354fdghdfghd";
-	private static int expMs = 12 * 3600 * 1000;
+	@Value("${aes.securet_key}")
+	private static String securetKey;
+	@Value("${aes.exp}")
+	private static int expMs;
     /**
      * 加密
      * 

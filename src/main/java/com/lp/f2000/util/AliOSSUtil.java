@@ -2,30 +2,30 @@ package com.lp.f2000.util;
 
 import java.io.File;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
+
 import com.aliyun.oss.ClientException;
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.OSSException;
 import com.aliyun.oss.model.PutObjectRequest;
 import com.aliyun.oss.model.PutObjectResult;
 
+@Component
+@PropertySource(value = "classpath:application.yml", ignoreResourceNotFound = true)
 public class AliOSSUtil {
-    /**
-     * 管理控制台里面获取EndPoint
-     */
-    private final static String END_POINT = "oss-cn-hangzhou.aliyuncs.com";
-    /**
-     * 云账号AccessKey有所有API访问权限，建议遵循阿里云安全最佳实践，创建并使用RAM子账号进行API访问或日常运维，请登录 https://ram.console.aliyun.com 创建
-     */
-    private final static String ACCESS_KEY_ID = "LTAItJjdGxxZzUxL";
-    private final static String ACCESS_KEY_SECRET = "OpoWY9S0KJr0QNis1KtIEPhSikeSZF";
-    /**
-     * 上传的BUCKET名称
-     */
-    private final static String BUCKET_NAME = "2000f-img";
-    /**
-     * 管理控制台里面获取的访问域名
-     */
-    private final static String FILE_HOST = "https://2000f-img.oss-cn-hangzhou.aliyuncs.com/";
+	@Value("${ali.end_point}")
+    private static String END_POINT;
+	@Value("${ali.access_key_id}")
+    private static String ACCESS_KEY_ID;
+	@Value("${ali.access_key_secret}")
+    private static String ACCESS_KEY_SECRET;
+	@Value("${ali.bucket_name}")
+    private static String BUCKET_NAME;
+	@Value("${ali.file_host}")
+    private static String FILE_HOST;
+
 
     /**
      * 上传文件到bucket
