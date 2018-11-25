@@ -116,7 +116,7 @@ person_day_limit_num 每日限
 
 15、编辑优惠券(POST)
 /admin/update_coupon
-
+id
 name 
 description
 coupon_type (1直减 2满减 3折扣)
@@ -159,7 +159,8 @@ num=5
 /**************************************************************/
 //=================前台台API===============================
 //POST方法同样需要添加csrfToken与csrfTime参数
-//另外所有/customer/*接口需要先登录
+/account/test_login（测试用户登录接口，会按一个默认测试账号登录, 返回登录token有效期10小时）
+//另外所有/customer/*接口需要先登录 ,所有/customer请求需要在header加入参数f2000AccessToken值为上面登录后返回的token
 /**************************************************************/
 
 1、首页商品列表接口 (GET)
@@ -170,9 +171,10 @@ num=5
 sku里面rest_num表示剩余库存量
 
 3、/account/login （GET、POST）前端登录接口（会重定向到微信服务器认证）
-4、/account/wx_login (前端无需调用， 是微信服务器登录成功的回调接口， 需要配置在微信公众号后台)
-5、/account/test_login（测试用户登录接口，会按一个默认测试账号登录）
+4、/account/wx_login (前端无需调用， 是微信服务器登录成功的回调接口， 需要配置在微信公众号后台，返回登录token有效期10小时)
+5、/account/test_login（测试用户登录接口，会按一个默认测试账号登录, 返回登录token有效期10小时）
 
+/**************************************************************/
 6、添加商品到购物车接口(POST)
 /customer/add_cart_product
 sku_id  商品sku id
