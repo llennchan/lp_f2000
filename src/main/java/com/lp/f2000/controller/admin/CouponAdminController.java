@@ -164,7 +164,7 @@ public class CouponAdminController {
 			@RequestParam(value = "receive_start_time", required = true) Timestamp receiveStartTime,
 			@RequestParam(value = "receive_end_time", required = true) Timestamp receiveEndTime,
 			@RequestParam(value = "use_start_time", required = true) Timestamp useStartTime,
-			@RequestParam(value = "use_start_time", required = true) Timestamp useEndTime,
+			@RequestParam(value = "use_end_time", required = true) Timestamp useEndTime,
 			@RequestParam(value = "valid_day_num", required = false) int validDayNum,
 			@RequestParam(value = "person_limit_num", required = true) int personLimitNum,
 			@RequestParam(value = "person_day_limit_num", required = true) int personDayLimitNum
